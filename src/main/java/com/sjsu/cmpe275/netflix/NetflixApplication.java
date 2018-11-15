@@ -1,4 +1,4 @@
-package com.sjsu.cmp275.netflix;
+package com.sjsu.cmpe275.netflix;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

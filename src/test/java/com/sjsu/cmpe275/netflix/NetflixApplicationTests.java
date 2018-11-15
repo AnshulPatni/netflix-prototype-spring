@@ -1,4 +1,4 @@
-package com.netflixProtype.netflix;
+package com.sjsu.cmpe275.netflix;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
