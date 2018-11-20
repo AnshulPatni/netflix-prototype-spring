@@ -1,4 +1,4 @@
-package com.sjsu.cmp275.netflix.controller;
+package com.sjsu.cmpe275.netflix.controller;
 
 public class Customer_details {
 	//get_user,	subscribe
