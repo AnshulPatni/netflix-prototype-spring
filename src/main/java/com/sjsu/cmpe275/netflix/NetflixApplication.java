@@ -1,8 +1,8 @@
 package com.sjsu.cmpe275.netflix;
 
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+//import org.slf4j.Logger;
+//import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -14,7 +14,7 @@ import com.sjsu.cmpe275.netflix.repository.User_repository;
 public class NetflixApplication implements CommandLineRunner{
 
 	
-	private Logger logger = LoggerFactory.getLogger(this.getClass());
+//	private Logger logger = LoggerFactory.getLogger(this.getClass());
 	
 	
 	public static void main(String[] args) {

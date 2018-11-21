@@ -2,19 +2,19 @@ package com.sjsu.cmpe275.netflix.controller;
 
 
 
-import com.sjsu.cmpe275.netflix.model.User;
-
-import java.sql.Date;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.time.LocalDateTime;
+//import com.sjsu.cmpe275.netflix.model.User;
+//
+//import java.sql.Date;
+//import java.text.DateFormat;
+//import java.text.SimpleDateFormat;
+//import java.time.LocalDateTime;
 import java.util.Calendar;
-import java.util.Optional;
+//import java.util.Optional;
 
-import javax.persistence.SqlResultSetMapping;
-import org.slf4j.LoggerFactory;
+//import javax.persistence.SqlResultSetMapping;
+//import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.CommandLineRunner;
+//import org.springframework.boot.CommandLineRunner;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -30,7 +30,7 @@ import javassist.tools.web.BadHttpRequest;
 @RequestMapping(value = "/user")
 public class User_Activity {
 
-	private org.slf4j.Logger logger =  LoggerFactory.getLogger(this.getClass());
+//	private org.slf4j.Logger logger =  LoggerFactory.getLogger(this.getClass());
 	
 	@Autowired
 	User_repository repository;

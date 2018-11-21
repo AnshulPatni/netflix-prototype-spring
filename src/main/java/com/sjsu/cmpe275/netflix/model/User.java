@@ -9,19 +9,18 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "USER")
+@Table(name = "USER_ACTIVITY")
 public class User 
 {
 	@Id
 	@GeneratedValue
-	@Column(name="Id")
+	@Column(name="user_activity_id")
 	private int id;
-	@Column(name="Email")
+	@Column(name="email")
 	private String Email;
-	@Column(name="Title")
+	@Column(name="title")
 	private String Title;
-	@Column(name="Date")
-	
+	@Column(name="timestamp")
 	private Date timestamp;
 	
 	public User(int id, String email, String title, Date timestamp) {
@@ -85,13 +84,6 @@ public class User
 
 	public User()
 	{}
-
-	
-	
-
-	
-
-	
 	
 
 }
