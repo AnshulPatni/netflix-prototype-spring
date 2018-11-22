@@ -1,6 +1,9 @@
 package com.sjsu.cmpe275.netflix.controller;
 
-import java.util.Date;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
@@ -9,12 +12,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
-import com.fasterxml.jackson.annotation.JsonView;
-import org.json.JSONObject;
 
 import com.sjsu.cmpe275.netflix.model.Subscription;
 import com.sjsu.cmpe275.netflix.repository.SubscriptionRepository;
@@ -45,6 +45,41 @@ public class Customer_details {
             
         return new ResponseEntity<>(subscription, HttpStatus.OK);
 
+    }
+	
+	@SuppressWarnings("unchecked")
+	@RequestMapping(value = "/checkBillingStatus/{email}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> checkBillingStatus(@PathVariable("email") String email) {
+		HttpStatus status = HttpStatus.OK;
+		Map<String, String> responseMap = new HashMap<>();
+		
+		responseMap.put("email", email);
+		
+		DateFormat df = new SimpleDateFormat("MM/dd/yyyy");
+		String subscriptionStartDateString = "";
+		String subscriptionEndDateString = "";
+		if(repository.getSubscriptionStartDate(email) == null) {
+			subscriptionStartDateString = null;
+		} else {
+			subscriptionStartDateString = df.format(repository.getSubscriptionStartDate(email));
+		}
+		
+		if(repository.getSubscriptionEndDate(email) == null) {
+			subscriptionEndDateString = null;
+		} else {
+			subscriptionEndDateString = df.format(repository.getSubscriptionEndDate(email));
+		}
+		
+		responseMap.put("subscriptionStartDate", subscriptionStartDateString);
+		responseMap.put("subscriptionEndDate", subscriptionEndDateString);
+		if(repository.getSubscriptionEndDate(email) == null) {
+			responseMap.put("status", "You have not subscribed to the services.");
+		} else {
+			String message = "Your subscription ends on " + repository.getSubscriptionEndDate(email);
+			responseMap.put("status", message);
+		}
+
+		return new ResponseEntity(responseMap, null, status);
     }
 	
 //	@RequestMapping(value = "/subscribe", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
