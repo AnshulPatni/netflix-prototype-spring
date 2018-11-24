@@ -16,21 +16,21 @@ import com.sjsu.cmpe275.netflix.model.Subscription;
 @Transactional
 public interface SubscriptionRepository extends CrudRepository<Subscription, Integer> {
 	
+//	@Query("SELECT * FROM Subscription s WHERE s.email = :email")
+//	Subscription getSubscriptionDetails(@Param("email") String email);
+	
 	@Query("SELECT s.subscriptionEndDate FROM Subscription s WHERE s.email = :email")
 	Date getSubscriptionEndDate(@Param("email") String email);
 	
 	@Query("SELECT s.subscriptionStartDate FROM Subscription s WHERE s.email = :email")
 	Date getSubscriptionStartDate(@Param("email") String email);
 	
-//	@Modifying
-//	@Query("update Subscription s set s.subscriptionStartDate = :subscriptionStartDate where s.email = :email")
-//	void updateSubscriptionStartDate(@Param("email") String email, @Param("subscription_start_date") java.util.Date subscription_start_date);
+	@Modifying
+	@Query("UPDATE Subscription s set s.subscriptionStartDate = :subscriptionStartDate WHERE s.email = :email")
+	void updateSubscriptionStartDate(@Param("email") String email, @Param("subscriptionStartDate") Date subscriptionStartDate);
 	
-//	@Query("SELECT u.Title FROM User u WHERE u.id = :id")
-//	String getName(@Param("id") Integer id);
-//	
-//	@Modifying
-//	@Query("update Subscription s set s.subscriptionStartDate = :subscriptionStartDate where s.email = :email")
-//	void updateSubscriptionDetails(@Param("email") int email, @Param("subscription_start_date") java.util.Date subscription_start_date);
+	@Modifying
+	@Query("UPDATE Subscription s set s.subscriptionEndDate = :subscriptionEndDate WHERE s.email = :email")
+	void updateSubscriptionEndDate(@Param("email") String email, @Param("subscriptionEndDate") Date subscriptionEndDate);
 	
 }

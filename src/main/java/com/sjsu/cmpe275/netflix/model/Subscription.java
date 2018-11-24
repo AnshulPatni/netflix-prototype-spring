@@ -15,10 +15,10 @@ public class Subscription {
 	@Column(name="email")
 	private String email;
 	
-	@Column(name="subscription_start_date")
+	@Column(name="subscriptionStartDate")
 	private Date subscriptionStartDate;
 	
-	@Column(name="subscription_end_date")
+	@Column(name="subscriptionEndDate")
 	private Date subscriptionEndDate;
 	
 	public Subscription() {
