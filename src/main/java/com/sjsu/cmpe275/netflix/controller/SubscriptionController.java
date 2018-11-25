@@ -84,7 +84,7 @@ public class SubscriptionController {
 	@RequestMapping(value = "/update", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> updateSubscriptionDetails(@RequestBody Map map, HttpSession session) {
 		@SuppressWarnings("unchecked")
-		ResponseEntity responseEntity = new ResponseEntity(null, HttpStatus.NOT_FOUND);
+		HttpStatus status = HttpStatus.OK;
 //		Subscription subscription = repository.getSubscriptionDetails(map.get("email").toString());
 		int days = (int) map.get("days");
 		Map<String, String> responseMap = new HashMap<>();
@@ -123,7 +123,7 @@ public class SubscriptionController {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return responseEntity;
+		return new ResponseEntity(responseMap, null, status);
     }
 //	
 //	private ResponseEntity<?> updateSubscription(String email) {
