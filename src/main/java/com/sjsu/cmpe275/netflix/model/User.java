@@ -1,28 +1,50 @@
 package com.sjsu.cmpe275.netflix.model;
 
 import java.sql.Date;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Transient;
+
+import org.springframework.http.HttpStatus;
+
+import com.fasterxml.jackson.annotation.JsonInclude;
 
 @Entity
-@Table(name = "USER_ACTIVITY")
+@JsonInclude(JsonInclude.Include.NON_NULL)
+@Table(name = "user_activity")
 public class User 
 {
 	@Id
 	@GeneratedValue
-	@Column(name="user_activity_id")
+	@Column(name="Id")
 	private int id;
-	@Column(name="email")
+	@Column(name="Email")
 	private String Email;
-	@Column(name="title")
+	@Column(name="Title")
 	private String Title;
 	@Column(name="timestamp")
-	private Date timestamp;
 	
+	private Date timestamp;
+	//@Transient
+	//private List<User> getToptenMovies;
+
+
+	//private int status;
+	//@Transient
+	//private int noOfPlay;
+	//@Transient
+    //private List<User> getToptenUser;
+	//public int getNoOfPlay() {
+	//	return noOfPlay;
+	//}
+
+
+
 	public User(int id, String email, String title, Date timestamp) {
 		super();
 		this.id = id;
@@ -84,6 +106,13 @@ public class User
 
 	public User()
 	{}
+
+	
+	
+
+	
+
+	
 	
 
 }
