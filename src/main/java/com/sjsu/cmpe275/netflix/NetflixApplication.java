@@ -24,8 +24,6 @@ public class NetflixApplication implements CommandLineRunner{
 	@Autowired
 	User_repository repository;
 	
-	
-	
 	@Override
 	public void run(String... args) throws Exception {
 		// TODO Auto-generated method stub
