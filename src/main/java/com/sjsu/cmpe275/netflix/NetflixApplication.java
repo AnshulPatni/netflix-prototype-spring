@@ -8,7 +8,7 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-import com.sjsu.cmpe275.netflix.repository.User_repository;
+import com.sjsu.cmpe275.netflix.repository.UserActivityRepository;;
 
 @SpringBootApplication
 public class NetflixApplication implements CommandLineRunner{
@@ -22,7 +22,7 @@ public class NetflixApplication implements CommandLineRunner{
 	}
 	
 	@Autowired
-	User_repository repository;
+	UserActivityRepository repository;
 	
 	@Override
 	public void run(String... args) throws Exception {

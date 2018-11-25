@@ -20,7 +20,7 @@ import com.sjsu.cmpe275.netflix.model.Movies;
 
 @RestController
 @RequestMapping(value = "/movies")
-public class Movies_Details {
+public class MoviesController {
 	
 	//add_movie	edit_movie,	delete_movie,	search_movie,	review_movie,	get_top_movie_on_stars
 	//Movie,	Movie_review

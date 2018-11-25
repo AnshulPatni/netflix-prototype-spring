@@ -17,12 +17,12 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
-import com.sjsu.cmpe275.netflix.model.User;
+import com.sjsu.cmpe275.netflix.model.UserActivityModel;
 
 
 @Repository
 @Transactional
-public interface User_repository extends CrudRepository<User, Integer> {
+public interface UserActivityRepository extends CrudRepository<UserActivityModel, Integer> {
 
 /*	public default int getData(String title)
 	{
@@ -39,24 +39,24 @@ public interface User_repository extends CrudRepository<User, Integer> {
 	//Collection<User> findAllActiveUsersNative();
 	//Collection<User> getDatabyTitle(@Param("title") String title);
 	
-	@Query("SELECT u FROM User u WHERE u.Title = :title")
+	@Query("SELECT u FROM UserActivityModel u WHERE u.Title = :title")
 	List findAllActiveUsers(@Param("title") String title);
 	
 	
-	@Query("SELECT count(*) FROM User u WHERE u.timestamp < :time and u.Title = :title")
+	@Query("SELECT count(*) FROM UserActivityModel u WHERE u.timestamp < :time and u.Title = :title")
 	int getDatabyNameAndPeriod(@Param("time") Date time, @Param("title") String title);
 	
 	@Modifying
-	@Query("update User u set u.timestamp = :status where u.id = :id")
+	@Query("update UserActivityModel u set u.timestamp = :status where u.id = :id")
 	int updateUserSetStatusForName(@Param("id") int id, @Param("status") java.util.Date status);
 
-	@Query("SELECT u.Email FROM User u WHERE u.timestamp < :date GROUP BY Email ORDER BY count(*) DESC")
+	@Query("SELECT u.Email FROM UserActivityModel u WHERE u.timestamp < :date GROUP BY Email ORDER BY count(*) DESC")
 	List getTopTenUsers(@Param("date") Date date);
 	
-	@Query("SELECT u.Title FROM User u WHERE u.timestamp >= :date GROUP BY Title ORDER BY count(*) DESC")
+	@Query("SELECT u.Title FROM UserActivityModel u WHERE u.timestamp >= :date GROUP BY Title ORDER BY count(*) DESC")
 	List getTopTenMovies(@Param("date") Date date);
 
-	@Query("SELECT u.Title FROM User u WHERE u.Email = :userName ORDER BY timestamp DESC")
+	@Query("SELECT u.Title FROM UserActivityModel u WHERE u.Email = :userName ORDER BY timestamp DESC")
 	List getMoviesHistoryByUser(@Param("userName") String userName);
 
 	

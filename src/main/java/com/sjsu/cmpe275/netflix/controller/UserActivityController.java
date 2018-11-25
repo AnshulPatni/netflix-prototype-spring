@@ -4,7 +4,7 @@ package com.sjsu.cmpe275.netflix.controller;
 import org.json.*;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.sjsu.cmpe275.netflix.model.User;
+import com.sjsu.cmpe275.netflix.model.UserActivityModel;
 
 import java.sql.Date;
 import java.text.DateFormat;
@@ -37,17 +37,18 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.HttpClientErrorException.BadRequest;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.bind.annotation.*;
-import com.sjsu.cmpe275.netflix.repository.User_repository;
+
+import com.sjsu.cmpe275.netflix.repository.UserActivityRepository;
 
 import javassist.tools.web.BadHttpRequest;
 @RestController
 @RequestMapping(value = "/user")
-public class User_Activity {
+public class UserActivityController {
 
 	private org.slf4j.Logger logger =  LoggerFactory.getLogger(this.getClass());
 	
 	@Autowired
-	User_repository repository;
+	UserActivityRepository repository;
 	
 	
 	
@@ -74,8 +75,7 @@ public class User_Activity {
         	
         } 
         else 
-        {
-            
+        {        
             HttpHeaders httpHeaders = new HttpHeaders();
             Map<String, Object> json = new HashMap<String, Object>();
 	        json.put("status_code", 200);

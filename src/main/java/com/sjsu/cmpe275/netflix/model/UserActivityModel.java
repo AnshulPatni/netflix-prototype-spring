@@ -17,7 +17,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 @Entity
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @Table(name = "user_activity")
-public class User 
+public class UserActivityModel 
 {
 	@Id
 	@GeneratedValue
@@ -45,7 +45,7 @@ public class User
 
 
 
-	public User(int id, String email, String title, Date timestamp) {
+	public UserActivityModel(int id, String email, String title, Date timestamp) {
 		super();
 		this.id = id;
 		Email = email;
@@ -54,7 +54,7 @@ public class User
 	}
 	
 	
-	public User( String email, String title, Date timestamp) {
+	public UserActivityModel( String email, String title, Date timestamp) {
 		super();
 		Email = email;
 		Title = title;
@@ -104,7 +104,7 @@ public class User
 	}
 
 
-	public User()
+	public UserActivityModel()
 	{}
 
 	

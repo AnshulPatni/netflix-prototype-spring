@@ -24,7 +24,7 @@ import com.sjsu.cmpe275.netflix.repository.SubscriptionRepository;
 
 @RestController
 @RequestMapping(value = "/subscription")
-public class Customer_details {
+public class CustomerController {
 	
 	@Autowired
 	SubscriptionRepository repository;
