@@ -9,7 +9,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name="subscription")
-public class Subscription {
+public class SubscriptionModel {
 	
 	@Id
 	@Column(name="email")
@@ -21,11 +21,11 @@ public class Subscription {
 	@Column(name="subscriptionEndDate")
 	private Date subscriptionEndDate;
 	
-	public Subscription() {
+	public SubscriptionModel() {
 		
 	}
 	
-	public Subscription(String email, Date subscriptionStartDate, Date subscriptionEndDate) {
+	public SubscriptionModel(String email, Date subscriptionStartDate, Date subscriptionEndDate) {
 		super();
 		this.email = email;
 		this.subscriptionStartDate = subscriptionStartDate;

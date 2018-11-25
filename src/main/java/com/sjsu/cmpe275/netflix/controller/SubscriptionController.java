@@ -19,12 +19,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.sjsu.cmpe275.netflix.model.Subscription;
+import com.sjsu.cmpe275.netflix.model.SubscriptionModel;
 import com.sjsu.cmpe275.netflix.repository.SubscriptionRepository;
 
 @RestController
 @RequestMapping(value = "/subscription")
-public class CustomerController {
+public class SubscriptionController {
 	
 	@Autowired
 	SubscriptionRepository repository;
@@ -36,7 +36,7 @@ public class CustomerController {
 	
 	private ResponseEntity<?> getSubscription(String email) {
 		
-		Subscription subscription = new Subscription();
+		SubscriptionModel subscription = new SubscriptionModel();
 		subscription.setEmail(email);
 		subscription.setSubscriptionStartDate(repository.getSubscriptionStartDate(email));
 		subscription.setSubscriptionEndDate(repository.getSubscriptionEndDate(email));

@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.sjsu.cmpe275.netflix.repository.MoviesRepository;
-import com.sjsu.cmpe275.netflix.model.Movies;
+import com.sjsu.cmpe275.netflix.model.MoviesModel;
 
 @RestController
 @RequestMapping(value = "/movies")
@@ -33,9 +33,9 @@ public class MoviesController {
 		HttpStatus status = HttpStatus.OK;
 		Map<String, Map<String, String>> responseMap = new HashMap<>();
 		System.out.println(keyword);
-		List<Movies> allMovies = repository.getMoviesByKeyword(keyword);
+		List<MoviesModel> allMovies = repository.getMoviesByKeyword(keyword);
 		System.out.println(allMovies.size());
-		for(Movies eachMovie: allMovies) {
+		for(MoviesModel eachMovie: allMovies) {
 			Map<String, String> eachMovieMap = new HashMap<>();
 			eachMovieMap.put("title", eachMovie.getTitle());
 			eachMovieMap.put("genre", eachMovie.getGenre());

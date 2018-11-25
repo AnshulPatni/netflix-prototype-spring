@@ -7,7 +7,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name="movies")
-public class Movies {
+public class MoviesModel {
 
 	@Id
 	@Column(name="title")
@@ -46,11 +46,11 @@ public class Movies {
 	@Column(name="price")
 	private int price;
 
-	public Movies() {
+	public MoviesModel() {
 		
 	}
 	
-	public Movies(String title, String genre, int year, String studio, String synopsis, String imageUrl, String actors,
+	public MoviesModel(String title, String genre, int year, String studio, String synopsis, String imageUrl, String actors,
 			String director, String country, String rating, String availability, int price) {
 		super();
 		this.title = title;
