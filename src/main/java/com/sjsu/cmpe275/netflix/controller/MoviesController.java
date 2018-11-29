@@ -2,6 +2,7 @@ package com.sjsu.cmpe275.netflix.controller;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -56,6 +57,36 @@ public class MoviesController {
 		
 		return new ResponseEntity(responseMap, null, status);
     }
+	
+	@RequestMapping(value = "/getAllMovies", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> getAllMovies() {
+		HttpStatus status = HttpStatus.OK;
+
+		List<Map<String, String>> responseList = new ArrayList<>();		
+		
+		List<MoviesModel> allMovies = repository.getAllMovies();
+		
+		System.out.println(allMovies.size());
+		for(MoviesModel eachMovie: allMovies) {
+			Map<String, String> eachMovieMap = new HashMap<>();
+			eachMovieMap.put("title", eachMovie.getTitle());
+			eachMovieMap.put("genre", eachMovie.getGenre());
+			eachMovieMap.put("year", String.valueOf(eachMovie.getYear()));
+			eachMovieMap.put("studio", eachMovie.getStudio());
+			eachMovieMap.put("synopsis", eachMovie.getSynopsis());
+			eachMovieMap.put("imageUrl", eachMovie.getImageUrl());
+			eachMovieMap.put("actors", eachMovie.getActors());
+			eachMovieMap.put("director", eachMovie.getDirector());
+			eachMovieMap.put("country", eachMovie.getCountry());
+			eachMovieMap.put("rating", eachMovie.getRating());
+			eachMovieMap.put("availability", eachMovie.getAvailability());
+			eachMovieMap.put("price", String.valueOf(eachMovie.getPrice()));
+			
+			responseList.add(eachMovieMap);
+		}
+		
+		return new ResponseEntity(responseList, null, status);
+	}
 	
 
 }

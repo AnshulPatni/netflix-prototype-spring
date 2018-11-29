@@ -34,6 +34,9 @@ public interface MoviesRepository extends CrudRepository<MoviesModel, Integer> {
 	@Query("SELECT m.noOfReviews FROM MoviesModel m WHERE m.title = :title")
 	int getNoOfReviews(@Param("title") String title);
 	
+	@Query("SELECT m FROM MoviesModel m")
+	List<MoviesModel> getAllMovies();
+	
 	@Modifying
 	@Query("UPDATE MoviesModel m set m.avgStars = :avgStars, m.noOfReviews = :noOfReviews WHERE m.title = :title")
 	void updateAvgStarsAndReviewCount(@Param("title") String title, @Param("avgStars") float avgStars, @Param("noOfReviews") int noOfReviews);
