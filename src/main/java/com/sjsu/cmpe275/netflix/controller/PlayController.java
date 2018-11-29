@@ -1,12 +1,10 @@
 package com.sjsu.cmpe275.netflix.controller;
 
 import java.sql.Date;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
+
 import java.util.HashMap;
 import java.util.Map;
 
-import org.apache.catalina.startup.ClassLoaderFactory.Repository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;

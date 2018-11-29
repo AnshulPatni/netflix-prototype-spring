@@ -46,27 +46,34 @@ public class PayPerViewController {
 		HttpStatus status = HttpStatus.OK;
 		Map<String, String> responseMap = new HashMap<>();
 		
-		String email = map.get("email").toString();
-		String title = map.get("title").toString();
-		
-		payPerViewRepository.insertPayPerView(email, title, "subscribed");
-		
-		int amount = moviesRepository.getMoviePrice(title);
-		
-		Date subscriptionEndDate = subscriptionRepository.getSubscriptionEndDate(email);
-		
-		if(subscriptionEndDate != null && subscriptionEndDate.after(Date.valueOf(java.time.LocalDate.now()))) {
-			amount /= 2;
+		try {
+			
+			String email = map.get("email").toString();
+			String title = map.get("title").toString();
+			
+			payPerViewRepository.insertPayPerView(email, title, "subscribed");
+			
+			int amount = moviesRepository.getMoviePrice(title);
+			
+			Date subscriptionEndDate = subscriptionRepository.getSubscriptionEndDate(email);
+			
+			if(subscriptionEndDate != null && subscriptionEndDate.after(Date.valueOf(java.time.LocalDate.now()))) {
+				amount /= 2;
+			}
+			
+			Date currDate = Date.valueOf(LocalDate.now());
+			
+			transactionRepository.insertTransaction(email, amount, currDate);
+			
+			responseMap.put("email", email);
+			responseMap.put("title", title);
+			responseMap.put("amount", Integer.toString(amount));
+			responseMap.put("message", "Successfully subscribed for pay per view.");
+			
+		} catch(Exception e) {
+			status = HttpStatus.BAD_REQUEST;
+			e.printStackTrace();
 		}
-		
-		Date currDate = Date.valueOf(LocalDate.now());
-		
-		transactionRepository.insertTransaction(email, amount, currDate);
-		
-		responseMap.put("email", email);
-		responseMap.put("title", title);
-		responseMap.put("amount", Integer.toString(amount));
-		responseMap.put("message", "Successfully");
 		
 		return new ResponseEntity(responseMap, null, status);
 	

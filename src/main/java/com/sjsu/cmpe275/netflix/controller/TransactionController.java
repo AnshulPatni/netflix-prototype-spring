@@ -1,5 +1,6 @@
 package com.sjsu.cmpe275.netflix.controller;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -9,7 +10,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -27,25 +27,28 @@ public class TransactionController {
 
 	@RequestMapping(value = "/getAllTransactions", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> getTransactions() {
-		Map<String, Map<String, String>> responseMap = new HashMap<>();
+		
+		List<Map<String, String>>  responseList = new ArrayList<>();
 		
 		List<TransactionModel> transactions = transactionRepository.getTransactions();
 		
 		if(transactions.isEmpty()) {
 			Map<String, String> tempMap = new HashMap<>();
 			tempMap.put("message", "There are zero transactions.");
-			responseMap.put("Error", tempMap);
+			responseList.add(tempMap);
+			return new ResponseEntity<>(responseList, HttpStatus.NOT_FOUND);
 		} else {
 			for(TransactionModel transaction : transactions) {
 				Map<String, String> tempMap = new HashMap<>();
+				tempMap.put("transaction id", Integer.toString(transaction.getTransactionId()));
 				tempMap.put("email", transaction.getEmail());
 				tempMap.put("amount", Integer.toString(transaction.getAmount()));
 				tempMap.put("date", transaction.getDate().toString());
-				responseMap.put(Integer.toString(transaction.getTransactionId()), tempMap);
+				responseList.add(tempMap);
 			}
 		}
 		
-        return new ResponseEntity<>(responseMap, HttpStatus.OK);
+        return new ResponseEntity<>(responseList, HttpStatus.OK);
     }
 	
 }

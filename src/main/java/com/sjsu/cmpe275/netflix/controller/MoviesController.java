@@ -1,7 +1,5 @@
 package com.sjsu.cmpe275.netflix.controller;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -34,10 +32,10 @@ public class MoviesController {
 	@RequestMapping(value = "/search/{keyword}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> searchMoviesByKeyword(@PathVariable("keyword") String keyword) {
 		HttpStatus status = HttpStatus.OK;
-		Map<String, Map<String, String>> responseMap = new HashMap<>();
-		System.out.println(keyword);
+
+		List<Map<String, String>> responseList = new ArrayList<>();
 		List<MoviesModel> allMovies = repository.getMoviesByKeyword(keyword);
-		System.out.println(allMovies.size());
+		
 		for(MoviesModel eachMovie: allMovies) {
 			Map<String, String> eachMovieMap = new HashMap<>();
 			eachMovieMap.put("title", eachMovie.getTitle());
@@ -52,10 +50,10 @@ public class MoviesController {
 			eachMovieMap.put("rating", eachMovie.getRating());
 			eachMovieMap.put("availability", eachMovie.getAvailability());
 			eachMovieMap.put("price", String.valueOf(eachMovie.getPrice()));
-			responseMap.put(eachMovie.getTitle(), eachMovieMap);
+			responseList.add(eachMovieMap);
 		}
 		
-		return new ResponseEntity(responseMap, null, status);
+		return new ResponseEntity(responseList, null, status);
     }
 	
 	@RequestMapping(value = "/getAllMovies", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
