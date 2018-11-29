@@ -21,15 +21,14 @@ public class UserActivityModel
 {
 	@Id
 	@GeneratedValue
-	@Column(name="Id")
-	private int id;
+	@Column(name="user_activity_id")
+	private int userActivityId;
 	@Column(name="Email")
 	private String Email;
 	@Column(name="Title")
 	private String Title;
-	@Column(name="timestamp")
-	
-	private Date timestamp;
+	@Column(name="date")
+	private Date date;
 	//@Transient
 	//private List<User> getToptenMovies;
 
@@ -45,32 +44,32 @@ public class UserActivityModel
 
 
 
-	public UserActivityModel(int id, String email, String title, Date timestamp) {
+	public UserActivityModel(int userActivityId, String email, String title, Date date) {
 		super();
-		this.id = id;
+		this.userActivityId = userActivityId;
 		Email = email;
 		Title = title;
-		this.timestamp = timestamp;
+		this.date = date;
 	}
 	
 	
-	public UserActivityModel( String email, String title, Date timestamp) {
+	public UserActivityModel( String email, String title, Date date) {
 		super();
 		Email = email;
 		Title = title;
-		this.timestamp = timestamp;
+		this.date = date;
 	}
 
 	//private String location;
 	//private Date Birth_date;
 	
 	public int getId() {
-		return id;
+		return userActivityId;
 	}
 
 
-	public void setId(int id) {
-		this.id = id;
+	public void setId(int userActivityId) {
+		this.userActivityId = userActivityId;
 	}
 
 
@@ -94,13 +93,13 @@ public class UserActivityModel
 	}
 
 
-	public Date getTimestamp() {
-		return timestamp;
+	public Date getDate() {
+		return date;
 	}
 
 
-	public void setTimestamp(Date timestamp) {
-		this.timestamp = timestamp;
+	public void setDate(Date date) {
+		this.date = date;
 	}
 
 

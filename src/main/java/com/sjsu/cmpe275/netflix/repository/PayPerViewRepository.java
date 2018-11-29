@@ -23,7 +23,7 @@ public interface PayPerViewRepository extends CrudRepository<PayPerViewModel, In
 	void updatePayPerViewStatus(@Param("email") String email, @Param("status") String status);
 	
 	@Modifying
-	@Query(value = "INSERT INTO pay_per_view p (p.email, p.title, p.status) VALUES (:email, :title, :status)", nativeQuery = true)
+	@Query(value = "INSERT INTO pay_per_view (email, title, status) VALUES (:email, :title, :status)", nativeQuery = true)
 	@Transactional
 	void insertPayPerView(@Param("email") String email, @Param("title") String title, @Param("status") String status);
 	

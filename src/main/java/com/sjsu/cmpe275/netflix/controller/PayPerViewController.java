@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.sjsu.cmpe275.netflix.repository.PayPerViewRepository;
 import com.sjsu.cmpe275.netflix.repository.TransactionRepository;
+import com.sjsu.cmpe275.netflix.repository.MoviesRepository;
 
 @RestController
 @RequestMapping(value = "/payPerView")
@@ -29,6 +30,9 @@ public class PayPerViewController {
 	@Autowired
 	TransactionRepository transactionRepository;
 	
+	@Autowired
+	MoviesRepository moviesRepository;
+	
 	@SuppressWarnings("unchecked")
 	@RequestMapping(value = "/payForPayPerView", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> insertIntoPayPerView(@RequestBody Map map, HttpSession session) {
@@ -38,20 +42,19 @@ public class PayPerViewController {
 		
 		String email = map.get("email").toString();
 		String title = map.get("title").toString();
-		String amount = map.get("amount").toString();
-		
-		responseMap.put("email", email);
-		responseMap.put("title", title);
-		responseMap.put("amount", amount);
-		responseMap.put("message", "Successfully");
 		
 		payPerViewRepository.insertPayPerView(email, title, "subscribed");
 		
-		int amountInInt = Integer.valueOf(amount);
+		int amount = moviesRepository.getMoviePrice(title);
 		
 		Date currDate = Date.valueOf(LocalDate.now());
 		
-		transactionRepository.insertTransaction(email, amountInInt, currDate);
+		transactionRepository.insertTransaction(email, amount, currDate);
+		
+		responseMap.put("email", email);
+		responseMap.put("title", title);
+		responseMap.put("amount", Integer.toString(amount));
+		responseMap.put("message", "Successfully");
 		
 		return new ResponseEntity(responseMap, null, status);
 	

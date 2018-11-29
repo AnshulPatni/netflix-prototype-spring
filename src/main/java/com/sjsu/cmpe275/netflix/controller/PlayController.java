@@ -41,7 +41,7 @@ public class PlayController {
     public ResponseEntity<?> playMovie(@PathVariable("title") String title) {
 		HttpStatus status = HttpStatus.OK;
 		Map<String, String> responseMap = new HashMap<>();
-		String email = "a@gmail.com";
+		String email = "ab@gmail.com";
 		String availability = moviesRepository.getMovieAvailabilityByTitle(title);
 		if(availability.equals("Free")) {
 			
@@ -73,7 +73,7 @@ public class PlayController {
 			if(payPerViewStatus != null && payPerViewStatus.equals("subscribed")) {
 				userActivityRepository.insertUserActivity(email, title, Date.valueOf(java.time.LocalDate.now()), availability);
 				payPerViewRepository.updatePayPerViewStatus(email, "unsubscribed");
-				responseMap.put("message", "Awesome! You have already paid for this movie as pPay Per View.");
+				responseMap.put("message", "Awesome! You have already paid for this movie as Pay Per View.");
 			} else {
 				responseMap.put("message", "Access Denied! You need to pay for playing movie as Pay Per View.");
 				status = HttpStatus.NOT_FOUND;

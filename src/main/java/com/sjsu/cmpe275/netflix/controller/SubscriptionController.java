@@ -132,6 +132,7 @@ public class SubscriptionController {
 					repository.updateSubscriptionEndDate(email, subscriptionEndDate);
 					subscriptionEndDateString = df.format(subscriptionEndDate);
 				}
+				
 			}	
 			
 			responseMap.put("subscriptionStartDate", subscriptionStartDateString);
