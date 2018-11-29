@@ -40,5 +40,10 @@ public interface MoviesRepository extends CrudRepository<MoviesModel, Integer> {
 	@Modifying
 	@Query("UPDATE MoviesModel m set m.avgStars = :avgStars, m.noOfReviews = :noOfReviews WHERE m.title = :title")
 	void updateAvgStarsAndReviewCount(@Param("title") String title, @Param("avgStars") float avgStars, @Param("noOfReviews") int noOfReviews);
+
 	
+	
+	@Modifying
+	@Query(value = "INSERT into movies (title, genre, year, studio, synopsis, image_url, actors, director, country, rating, availability, price, movie_url) VALUES (:title, :genre, :year, :studio, :synopsis, :image_url, :actors, :director, :country, :rating, :availability, :price, :movie_url)", nativeQuery = true)
+	void addMovieAdmin(@Param("title") String title, @Param("genre") String genre, @Param("year") int year ,@Param("studio") String studio,@Param("synopsis") String synopsis ,@Param("image_url") String image_url, @Param("actors") String actors,@Param("director") String director, @Param("country") String country, @Param("rating") String rating, @Param("availability") String availability, @Param("price") int price, @Param("movie_url") String movie_url);
 }

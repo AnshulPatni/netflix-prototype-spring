@@ -52,6 +52,18 @@ public class MoviesModel {
 	@Column(name="no_of_reviews")
 	private int noOfReviews;
 
+	@Column(name = "movie_url")
+	private String movie_url;
+	
+	
+	public String getMovie_url() {
+		return movie_url;
+	}
+
+	public void setMovie_url(String movie_url) {
+		this.movie_url = movie_url;
+	}
+
 	public MoviesModel() {
 		
 	}

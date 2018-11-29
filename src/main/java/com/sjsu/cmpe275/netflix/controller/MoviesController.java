@@ -5,12 +5,16 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -85,6 +89,60 @@ public class MoviesController {
 		
 		return new ResponseEntity(responseList, null, status);
 	}
+	
+	@RequestMapping(value = "/addMovie", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> addMovieByAdmin(@RequestBody Map map, HttpSession session)
+	{
+        
+		String title = (String) map.get("title");
+		System.out.printf("here I am ", title);
+		String genre = (String) map.get("genre");
+		int year = (int) map.get("year");
+		String studio = (String) map.get("studio");
+		String synopsis = (String) map.get("synopsis");
+		String image_url = (String) map.get("image_url");
+		String actors = (String) map.get("actors");
+		String director = (String) map.get("director");
+		String country = (String) map.get("country");
+		String rating =  (String) map.get("rating");
+		String availability = (String) map.get("availability");
+		int price = (int) map.get("price");
+		String movie_url = (String) map.get("movie_url");
+		
+		return addMovie(title, genre, year, studio, synopsis, image_url, actors, director, country, rating, availability, price, movie_url);
+		
+		
+}
+	private ResponseEntity<?> addMovie(String title,String genre,int year,String studio,String synopsis,String image_url,String actors,String director,String country, String rating,String availability,int price, String movie_url)
+	{
+		ResponseEntity responseEntity = new ResponseEntity(null, HttpStatus.NOT_FOUND);
+		String data = "";
+	try
+	{
+		    repository.addMovieAdmin(title, genre, year, studio, synopsis, image_url, actors, director, country, rating, availability, price, movie_url); 
+            HttpHeaders httpHeaders = new HttpHeaders();			
+            return new ResponseEntity<>(responseEntity, httpHeaders, HttpStatus.OK);      
+	}
+	catch(Exception e)
+	
+	{e.printStackTrace();}
+	return responseEntity;
+		
+		/*
+		ResponseEntity responseEntity = new ResponseEntity("server error", HttpStatus.NOT_FOUND);
+		HttpHeaders httpHeaders = new HttpHeaders();
+		try
+		{
+			
+			repository.addMovieAdmin(title, genre, year, studio, synopsis, image_url, actors, director, country, rating, availability, price, movie_url); 
+	        return new ResponseEntity<>("server_success", null, HttpStatus.OK);      
+	        }
+		
+		catch(Exception e) {e.printStackTrace();}
+		return responseEntity;*/
+
+	}
+
 	
 
 }

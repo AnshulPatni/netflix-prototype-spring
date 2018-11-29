@@ -11,6 +11,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Collection;
@@ -78,16 +79,16 @@ public class UserActivityController {
         else 
         {        
             HttpHeaders httpHeaders = new HttpHeaders();
-            Map<String, Object> json = new HashMap<String, Object>();
-	        json.put("status_code", 200);
-	        json.put("Details of user's ", questionOptional);
-	        try 
-	           {
-		         ObjectMapper mapper = new ObjectMapper();
-		         data  = mapper.writeValueAsString(json);
-	            }
-            catch(Exception e) {}
-            return new ResponseEntity<>(data, httpHeaders, HttpStatus.OK);      
+            List<HashMap<String,String>> lst = new ArrayList<HashMap<String,String>>();
+			for (Object i: questionOptional)
+			{
+				Map<String, String> map = new HashMap<String, String>();
+				map.put("Title", i.toString());
+				lst.add((HashMap<String, String>) map);
+				//System.out.printf("I am here",i);
+				
+			}
+            return new ResponseEntity<>(lst, httpHeaders, HttpStatus.OK);      
         }
 	}
 	catch(Exception e)
@@ -121,16 +122,12 @@ public class UserActivityController {
 		            if(questionOptional != 0)
 		            {
 					        HttpHeaders httpHeaders = new HttpHeaders();
-					        Map<String, Object> json = new HashMap<String, Object>();
-					        json.put("status code", 200);
-					        json.put("Number Of Plays", questionOptional);
-					        
-				       try {
-					         ObjectMapper mapper = new ObjectMapper();
-					         data  = mapper.writeValueAsString(json);
-				           }
-				      catch(Exception e) {}
-				      return new ResponseEntity(data ,httpHeaders, HttpStatus.OK);   
+							Map<String, Integer> map = new HashMap<String, Integer>();
+							map.put("NoOfPlay", questionOptional);
+						    //System.out.printf("I am here",i);
+								
+							
+				      return new ResponseEntity(map ,httpHeaders, HttpStatus.OK);   
 		            }
 		            else
 		            {
@@ -186,17 +183,16 @@ public class UserActivityController {
 	         else 
 	         {
 	            
-	            Map<String, Object> json = new HashMap<String, Object>();
-		        json.put("status_code", 200);
-		        json.put("Top Ten Users ", questionOptional);
-		        String data="";
-		        try 
-		           {
-			         ObjectMapper mapper = new ObjectMapper();
-			         data  = mapper.writeValueAsString(json);
-		            }
-	            catch(Exception e) {}
-	            return new ResponseEntity<>(data, httpHeaders, HttpStatus.OK);      
+	        	 List<HashMap<String,String>> lst = new ArrayList<HashMap<String,String>>();
+					for (Object i: questionOptional)
+					{
+						Map<String, String> map = new HashMap<String, String>();
+						map.put("User", i.toString());
+						lst.add((HashMap<String, String>) map);
+						//System.out.printf("I am here",i);
+						
+					}
+	            return new ResponseEntity<>(lst, httpHeaders, HttpStatus.OK);      
 	         }
 		}
 		catch(Exception e) {e.printStackTrace();}
@@ -234,18 +230,16 @@ public class UserActivityController {
 		        } 
 		        else 
 		        {
-		            
-		            Map<String, Object> json = new HashMap<String, Object>();
-			        json.put("status_code", 200);
-			        json.put("Top Ten Movies ", questionOptional);
-			        String data="";
-			        try 
-			           {
-				         ObjectMapper mapper = new ObjectMapper();
-				         data  = mapper.writeValueAsString(json);
-			            }
-		            catch(Exception e) {}
-		            return new ResponseEntity<>(data, httpHeaders, HttpStatus.OK);      
+		        	List<HashMap<String,String>> lst = new ArrayList<HashMap<String,String>>();
+					for (Object i: questionOptional)
+					{
+						Map<String, String> map = new HashMap<String, String>();
+						map.put("moviename", i.toString());
+						lst.add((HashMap<String, String>) map);
+						//System.out.printf("I am here",i);
+						
+					}
+		            return new ResponseEntity<>(lst, httpHeaders, HttpStatus.OK);      
 		        }
 		}
 	catch(Exception e) {e.printStackTrace();}
@@ -276,17 +270,16 @@ public class UserActivityController {
 	        else 
 	        {
 	            
-	            Map<String, Object> json = new HashMap<String, Object>();
-		        json.put("status_code", 200);
-		        json.put(" Movies in Reverse chronological order for this user: ", questionOptional);
-		        String data="";
-		        try 
-		           {
-			         ObjectMapper mapper = new ObjectMapper();
-			         data  = mapper.writeValueAsString(json);
-		            }
-	            catch(Exception e) {}
-	            return new ResponseEntity<>(data, httpHeaders, HttpStatus.OK);      
+	        	List<HashMap<String,String>> lst = new ArrayList<HashMap<String,String>>();
+				for (Object i: questionOptional)
+				{
+					Map<String, String> map = new HashMap<String, String>();
+					map.put("moviename", i.toString());
+					lst.add((HashMap<String, String>) map);
+					//System.out.printf("I am here",i);
+					
+				}
+	            return new ResponseEntity<>(lst, httpHeaders, HttpStatus.OK);      
 	        }
 		}
 		catch(Exception e) {e.printStackTrace();}
