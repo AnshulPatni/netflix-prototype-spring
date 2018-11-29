@@ -42,6 +42,7 @@ import com.sjsu.cmpe275.netflix.repository.UserActivityRepository;
 
 import javassist.tools.web.BadHttpRequest;
 @RestController
+@CrossOrigin(origins = "*", allowCredentials = "true")
 @RequestMapping(value = "/user")
 public class UserActivityController {
 

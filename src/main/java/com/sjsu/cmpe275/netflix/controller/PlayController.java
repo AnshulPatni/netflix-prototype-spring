@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -22,6 +23,7 @@ import com.sjsu.cmpe275.netflix.repository.SubscriptionRepository;
 import com.sjsu.cmpe275.netflix.repository.PayPerViewRepository;
 
 @RestController
+@CrossOrigin(origins = "*", allowCredentials = "true")
 @RequestMapping(value = "/movies/play")
 public class PlayController {
 	
