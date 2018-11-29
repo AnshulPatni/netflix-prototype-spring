@@ -4,6 +4,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import java.util.Map;
 
 @Entity
 @Table(name="movies")
@@ -52,6 +53,7 @@ public class MoviesModel {
 	@Column(name="no_of_reviews")
 	private int noOfReviews;
 
+
 	@Column(name = "movie_url")
 	private String movie_url;
 	
@@ -64,9 +66,28 @@ public class MoviesModel {
 		this.movie_url = movie_url;
 	}
 
+
 	public MoviesModel() {
 		
 	}
+
+	//        genre, year, actors, directors, MPAA rating, and number of stars
+
+//	public MoviesModel(String genre, int year, String actors, String director, String rating, Float avgStars)
+//	public MoviesModel(Map<String, String> parameters) {
+//		super();
+//		System.out.println("inside movie model constructor");
+//		System.out.println(parameters.get(year));
+////		System.out.println(parameters.get(year).getClass().getName());
+////		System.out.println(parameters.get(year).getClass());
+//		System.out.println(parameters.get(genre));
+//		this.genre = parameters.get(genre);
+//		this.year = Integer.parseInt(parameters.get(year));
+//		this.actors = parameters.get(actors);
+//		this.director = parameters.get(director);
+//		this.rating = parameters.get(rating);
+//		this.avgStars = Float.valueOf(parameters.get(avgStars));
+//	}
 	
 	public MoviesModel(String title, String genre, int year, String studio, String synopsis, String imageUrl,
 			String actors, String director, String country, String rating, String availability, int price,

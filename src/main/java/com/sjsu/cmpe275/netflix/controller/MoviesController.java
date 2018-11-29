@@ -7,6 +7,8 @@ import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
+import com.sjsu.cmpe275.netflix.model.MoviesModel;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -26,7 +28,7 @@ import com.sjsu.cmpe275.netflix.model.MoviesModel;
 @CrossOrigin(origins = "*", allowCredentials = "true")
 @RequestMapping(value = "/movies")
 public class MoviesController {
-	
+
 	//add_movie	edit_movie,	delete_movie,	search_movie,	review_movie,	get_top_movie_on_stars
 	//Movie,	Movie_review
 
@@ -34,7 +36,7 @@ public class MoviesController {
 	MoviesRepository repository;
 
 	@RequestMapping(value = "/search/{keyword}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> searchMoviesByKeyword(@PathVariable("keyword") String keyword) {
+	public ResponseEntity<?> searchMoviesByKeyword(@PathVariable("keyword") String keyword) {
 		HttpStatus status = HttpStatus.OK;
 
 		List<Map<String, String>> responseList = new ArrayList<>();
@@ -56,9 +58,11 @@ public class MoviesController {
 			eachMovieMap.put("price", String.valueOf(eachMovie.getPrice()));
 			responseList.add(eachMovieMap);
 		}
-		
+
 		return new ResponseEntity(responseList, null, status);
     }
+
+
 	
 	@RequestMapping(value = "/getAllMovies", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> getAllMovies() {

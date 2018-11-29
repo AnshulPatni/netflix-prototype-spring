@@ -42,7 +42,7 @@ public class SubscriptionController {
     }
 	
 	private ResponseEntity<?> getSubscription(String email) {
-		
+
 		SubscriptionModel subscription = new SubscriptionModel();
 		subscription.setEmail(email);
 		subscription.setSubscriptionStartDate(repository.getSubscriptionStartDate(email));

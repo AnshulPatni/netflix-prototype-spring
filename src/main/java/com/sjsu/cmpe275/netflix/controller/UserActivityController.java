@@ -1,6 +1,8 @@
 package com.sjsu.cmpe275.netflix.controller;
 
 
+import com.sjsu.cmpe275.netflix.repository.MoviesRepository;
+import com.sjsu.cmpe275.netflix.repository.SubscriptionRepository;
 import org.json.*;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -51,8 +53,9 @@ public class UserActivityController {
 	
 	@Autowired
 	UserActivityRepository repository;
-	
-	
+
+	@Autowired
+	SubscriptionRepository repository1;
 	
 	
 	
@@ -284,6 +287,22 @@ public class UserActivityController {
 		}
 		catch(Exception e) {e.printStackTrace();}
 		return responseEntity;
+
+
+
+
+
+
+	}
+
+
+
+	//API 6(a)-(i)
+	@RequestMapping(value = "/uniqueSubscription/", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<?> getUniqueSubscriber(@PathVariable("uniqueSubscription") String userName) {
+		
+
+		return getUniqueSubscriber(userName);
 	}
 	
 }	

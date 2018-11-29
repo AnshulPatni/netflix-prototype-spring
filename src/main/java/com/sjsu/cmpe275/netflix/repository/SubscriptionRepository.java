@@ -1,9 +1,11 @@
 package com.sjsu.cmpe275.netflix.repository;
 
 import java.sql.Date;
+import java.util.List;
 
 import javax.transaction.Transactional;
 
+import com.sjsu.cmpe275.netflix.model.SubscriptionModel;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
@@ -37,5 +39,12 @@ public interface SubscriptionRepository extends CrudRepository<SubscriptionModel
     @Query(value = "INSERT into subscription (email, subscription_start_date, subscription_end_date) VALUES (:email,:subscriptionStartDate,:subscriptionEndDate)", nativeQuery = true)
     @Transactional
     void insertSubscriptionDetails(@Param("email") String email, @Param("subscriptionStartDate") Date subscriptionStartDate, @Param("subscriptionEndDate") Date subscriptionEndDate);
-	
+
+
+
+//	//Getting number of unique subscription users
+//	@Query("SELECT s.email FROM SubscriptionModel s WHERE s.subscriptionEndDate <= :date")
+//	List getUniqueSubscriber(@Param("email") String email);
+
 }
+

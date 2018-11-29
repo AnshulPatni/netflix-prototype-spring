@@ -1,6 +1,7 @@
 package com.sjsu.cmpe275.netflix.model;
 
 import java.sql.Date;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -10,7 +11,7 @@ import javax.persistence.Table;
 @Entity
 @Table(name="subscription")
 public class SubscriptionModel {
-	
+
 	@Id
 	@Column(name="email")
 	private String email;
@@ -22,7 +23,7 @@ public class SubscriptionModel {
 	private Date subscriptionEndDate;
 	
 	public SubscriptionModel() {
-		
+
 	}
 	
 	public SubscriptionModel(String email, Date subscriptionStartDate, Date subscriptionEndDate) {
