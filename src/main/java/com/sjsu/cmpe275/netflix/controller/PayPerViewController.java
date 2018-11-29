@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.sjsu.cmpe275.netflix.repository.PayPerViewRepository;
 import com.sjsu.cmpe275.netflix.repository.TransactionRepository;
 import com.sjsu.cmpe275.netflix.repository.MoviesRepository;
+import com.sjsu.cmpe275.netflix.repository.SubscriptionRepository;
 
 @RestController
 @CrossOrigin(origins = "*", allowCredentials = "true")
@@ -35,6 +36,9 @@ public class PayPerViewController {
 	@Autowired
 	MoviesRepository moviesRepository;
 	
+	@Autowired
+	SubscriptionRepository subscriptionRepository;
+	
 	@SuppressWarnings("unchecked")
 	@RequestMapping(value = "/payForPayPerView", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> insertIntoPayPerView(@RequestBody Map map, HttpSession session) {
@@ -48,6 +52,12 @@ public class PayPerViewController {
 		payPerViewRepository.insertPayPerView(email, title, "subscribed");
 		
 		int amount = moviesRepository.getMoviePrice(title);
+		
+		Date subscriptionEndDate = subscriptionRepository.getSubscriptionEndDate(email);
+		
+		if(subscriptionEndDate != null && subscriptionEndDate.after(Date.valueOf(java.time.LocalDate.now()))) {
+			amount /= 2;
+		}
 		
 		Date currDate = Date.valueOf(LocalDate.now());
 		

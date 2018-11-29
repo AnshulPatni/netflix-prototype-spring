@@ -45,13 +45,20 @@ public class MoviesModel {
 	
 	@Column(name="price")
 	private int price;
+	
+	@Column(name="avg_stars")
+	private float avgStars;
+	
+	@Column(name="no_of_reviews")
+	private int noOfReviews;
 
 	public MoviesModel() {
 		
 	}
 	
-	public MoviesModel(String title, String genre, int year, String studio, String synopsis, String imageUrl, String actors,
-			String director, String country, String rating, String availability, int price) {
+	public MoviesModel(String title, String genre, int year, String studio, String synopsis, String imageUrl,
+			String actors, String director, String country, String rating, String availability, int price,
+			float avgStars, int noOfReviews) {
 		super();
 		this.title = title;
 		this.genre = genre;
@@ -65,6 +72,8 @@ public class MoviesModel {
 		this.rating = rating;
 		this.availability = availability;
 		this.price = price;
+		this.avgStars = avgStars;
+		this.noOfReviews = noOfReviews;
 	}
 
 	public String getTitle() {
@@ -161,6 +170,22 @@ public class MoviesModel {
 
 	public void setPrice(int price) {
 		this.price = price;
+	}
+	
+	public float getAvgStars() {
+		return avgStars;
+	}
+
+	public void setAvgStars(float avgStars) {
+		this.avgStars = avgStars;
+	}
+
+	public int getNoOfReviews() {
+		return noOfReviews;
+	}
+
+	public void setNoOfReviews(int noOfReviews) {
+		this.noOfReviews = noOfReviews;
 	}
 	
 }

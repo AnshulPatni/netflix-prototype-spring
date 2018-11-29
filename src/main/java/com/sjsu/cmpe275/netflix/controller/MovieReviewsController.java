@@ -1,5 +1,6 @@
 package com.sjsu.cmpe275.netflix.controller;
 
+import java.math.BigDecimal;
 import java.sql.Date;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -24,6 +25,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sjsu.cmpe275.netflix.repository.MovieReviewsRepository;
+import com.sjsu.cmpe275.netflix.repository.MoviesRepository;
 
 @RestController
 @CrossOrigin(origins = "*", allowCredentials = "true")
@@ -32,6 +34,9 @@ public class MovieReviewsController {
 
 	@Autowired
 	MovieReviewsRepository repository;
+	
+	@Autowired
+	MoviesRepository moviesRepository;
 
 	@RequestMapping(value = "/insertReview", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> insertMovieReview(@RequestBody Map map, HttpSession session) {
@@ -47,6 +52,16 @@ public class MovieReviewsController {
 			String review = map.get("review").toString();
 			responseMap.put("review", review);
 			repository.insertMovieReview(title, reviewRating, review);
+			
+			float avgStars = moviesRepository.getAvgStars(title);
+			int noOfReviews = moviesRepository.getNoOfReviews(title);
+			
+//			avgStars = avgStars.multiply(new BigDecimal(noOfReviews)).add(new BigDecimal(reviewRating)).divide(new BigDecimal(noOfReviews + 1));	
+			
+			avgStars = ((avgStars * (float) noOfReviews) + (float) reviewRating) / ((float) (noOfReviews + 1));
+			
+			moviesRepository.updateAvgStarsAndReviewCount(title, avgStars, noOfReviews+1);
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
