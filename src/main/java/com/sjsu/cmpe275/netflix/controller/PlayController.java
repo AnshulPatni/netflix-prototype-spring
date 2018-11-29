@@ -37,11 +37,11 @@ public class PlayController {
 	@Autowired
 	PayPerViewRepository payPerViewRepository;
 
-	@RequestMapping(value = "/{title}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> playMovie(@PathVariable("title") String title) {
+	@RequestMapping(value = "/{email}/{title}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> playMovie(@PathVariable("email") String email, @PathVariable("title") String title) {
 		HttpStatus status = HttpStatus.OK;
 		Map<String, String> responseMap = new HashMap<>();
-		String email = "ab@gmail.com";
+//		String email = "ab@gmail.com";
 		String availability = moviesRepository.getMovieAvailabilityByTitle(title);
 		if(availability.equals("Free")) {
 			
