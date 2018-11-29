@@ -18,4 +18,7 @@ public interface MoviesRepository extends CrudRepository<MoviesModel, Integer> {
 	@Query("SELECT m FROM MoviesModel m WHERE CONCAT(m.title, '', m.synopsis, '', m.actors, '', m.director) LIKE %?1%")
 	List<MoviesModel> getMoviesByKeyword(@Param("keyword") String keyword);
 	
+	@Query("SELECT m.availability FROM MoviesModel m WHERE m.title = :title")
+	String getMovieAvailabilityByTitle(@Param("title") String title);
+	
 }

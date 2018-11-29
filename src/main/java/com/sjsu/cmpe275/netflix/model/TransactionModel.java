@@ -12,7 +12,7 @@ import javax.persistence.Table;
 public class TransactionModel {
 	
 	@Id
-	@Column(name="transactionId")
+	@Column(name="transaction_id")
 	private int transactionId;
 	
 	@Column(name="email")

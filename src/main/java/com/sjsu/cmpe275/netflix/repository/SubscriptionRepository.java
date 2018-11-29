@@ -33,4 +33,9 @@ public interface SubscriptionRepository extends CrudRepository<SubscriptionModel
 	@Query("UPDATE SubscriptionModel s set s.subscriptionEndDate = :subscriptionEndDate WHERE s.email = :email")
 	void updateSubscriptionEndDate(@Param("email") String email, @Param("subscriptionEndDate") Date subscriptionEndDate);
 	
+	@Modifying
+    @Query(value = "INSERT into subscription (email, subscription_start_date, subscription_end_date) VALUES (:email,:subscriptionStartDate,:subscriptionEndDate)", nativeQuery = true)
+    @Transactional
+    void insertSubscriptionDetails(@Param("email") String email, @Param("subscriptionStartDate") Date subscriptionStartDate, @Param("subscriptionEndDate") Date subscriptionEndDate);
+	
 }

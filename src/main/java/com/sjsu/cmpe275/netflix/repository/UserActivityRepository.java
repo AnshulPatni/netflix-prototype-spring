@@ -46,9 +46,9 @@ public interface UserActivityRepository extends CrudRepository<UserActivityModel
 	@Query("SELECT count(*) FROM UserActivityModel u WHERE u.timestamp < :time and u.Title = :title")
 	int getDatabyNameAndPeriod(@Param("time") Date time, @Param("title") String title);
 	
-	@Modifying
-	@Query("update UserActivityModel u set u.timestamp = :status where u.id = :id")
-	int updateUserSetStatusForName(@Param("id") int id, @Param("status") java.util.Date status);
+//	@Modifying
+//	@Query("update UserActivityModel u set u.timestamp = :status where u.id = :id")
+//	int updateUserSetStatusForName(@Param("id") int id, @Param("status") java.util.Date status);
 
 	@Query("SELECT u.Email FROM UserActivityModel u WHERE u.timestamp < :date GROUP BY Email ORDER BY count(*) DESC")
 	List getTopTenUsers(@Param("date") Date date);
@@ -59,7 +59,10 @@ public interface UserActivityRepository extends CrudRepository<UserActivityModel
 	@Query("SELECT u.Title FROM UserActivityModel u WHERE u.Email = :userName ORDER BY timestamp DESC")
 	List getMoviesHistoryByUser(@Param("userName") String userName);
 
-	
+	@Modifying
+	@Query(value = "INSERT into user_activity (email, title, timestamp, movieAvailability) VALUE (:email,:title,:date, :availability)", nativeQuery = true)
+	@Transactional
+	void insertUserActivity(@Param("email") String email, @Param("title") String title, @Param("date") Date date, @Param("availability") String availability);
 	
     /*Query query = entityManager.createNativeQuery("INSERT INTO topic (ID, TITLE,CREATION_DATE) " +
             " VALUES(?,?,?)");

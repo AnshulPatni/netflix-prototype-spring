@@ -3,6 +3,7 @@ package com.sjsu.cmpe275.netflix.controller;
 import java.sql.Date;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
@@ -21,6 +22,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.sjsu.cmpe275.netflix.model.SubscriptionModel;
 import com.sjsu.cmpe275.netflix.repository.SubscriptionRepository;
+import com.sjsu.cmpe275.netflix.repository.TransactionRepository;
 
 @RestController
 @RequestMapping(value = "/subscription")
@@ -28,8 +30,11 @@ public class SubscriptionController {
 	
 	@Autowired
 	SubscriptionRepository repository;
+	
+	@Autowired
+	TransactionRepository transactionRepository;
 
-	@RequestMapping(value = "/{email}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	@RequestMapping(value = "/getSubscriptionDetails/{email}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> getSubscriptionDetails(@PathVariable("email") String email) {
         return getSubscription(email);
     }
@@ -81,62 +86,65 @@ public class SubscriptionController {
 		return new ResponseEntity(responseMap, null, status);
     }
 	
-	@RequestMapping(value = "/update", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+	@RequestMapping(value = "/payForSubscription", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> updateSubscriptionDetails(@RequestBody Map map, HttpSession session) {
 		@SuppressWarnings("unchecked")
 		HttpStatus status = HttpStatus.OK;
-//		Subscription subscription = repository.getSubscriptionDetails(map.get("email").toString());
-		int days = (int) map.get("days");
+
+		int month = (int) map.get("month");
 		Map<String, String> responseMap = new HashMap<>();
-		responseMap.put("email", map.get("email").toString());
+		String email = map.get("email").toString();
+		int amount = (int) map.get("amount");
+		int days = month * 30;
+		
+		responseMap.put("email", email);
+		
 		try {
 			DateFormat df = new SimpleDateFormat("MM/dd/yyyy");
 			String subscriptionStartDateString = "";
 			String subscriptionEndDateString = "";
-			if(repository.getSubscriptionStartDate(map.get("email").toString()) == null) {
-				subscriptionStartDateString = df.format(java.time.LocalDate.now());
+			
+			if(repository.getSubscriptionStartDate(email) == null) {
+				subscriptionStartDateString = java.time.LocalDate.now().toString();
 				Date subscriptionStartDate = Date.valueOf(java.time.LocalDate.now());
-				repository.updateSubscriptionStartDate(map.get("email").toString(), subscriptionStartDate);
-			} else {
-				subscriptionStartDateString = df.format(repository.getSubscriptionStartDate(map.get("email").toString()));
-			}
-			
-			Calendar c = Calendar.getInstance();
-			
-			if(repository.getSubscriptionEndDate(map.get("email").toString()) == null) {
-				c.setTime(Date.valueOf(java.time.LocalDate.now()));
+				Calendar c = Calendar.getInstance();
+				c.setTime(subscriptionStartDate);
 		        c.add(Calendar.DATE, days);
 		        Date subscriptionEndDate = new Date(c.getTimeInMillis());
-				repository.updateSubscriptionEndDate(map.get("email").toString(), subscriptionEndDate);
 				subscriptionEndDateString = df.format(subscriptionEndDate);
+				
+				repository.insertSubscriptionDetails(email, subscriptionStartDate, subscriptionEndDate);
+				
 			} else {
-				c.setTime(Date.valueOf(repository.getSubscriptionEndDate(map.get("email").toString()).toString()));
-		        c.add(Calendar.DATE, days);
-		        Date subscriptionEndDate = new Date(c.getTimeInMillis());
-				repository.updateSubscriptionEndDate(map.get("email").toString(), subscriptionEndDate);
-				subscriptionEndDateString = df.format(subscriptionEndDate);
-			}
+				subscriptionStartDateString = df.format(repository.getSubscriptionStartDate(email));
+				Calendar c = Calendar.getInstance();
+				
+				if(repository.getSubscriptionEndDate(email) == null) {
+					c.setTime(Date.valueOf(java.time.LocalDate.now()));
+			        c.add(Calendar.DATE, days);
+			        Date subscriptionEndDate = new Date(c.getTimeInMillis());
+					repository.updateSubscriptionEndDate(email, subscriptionEndDate);
+					subscriptionEndDateString = df.format(subscriptionEndDate);
+				} else {
+					c.setTime(Date.valueOf(repository.getSubscriptionEndDate(email).toString()));
+			        c.add(Calendar.DATE, days);
+			        Date subscriptionEndDate = new Date(c.getTimeInMillis());
+					repository.updateSubscriptionEndDate(email, subscriptionEndDate);
+					subscriptionEndDateString = df.format(subscriptionEndDate);
+				}
+			}	
 			
 			responseMap.put("subscriptionStartDate", subscriptionStartDateString);
 			responseMap.put("subscriptionEndDate", subscriptionEndDateString);
+			
+			Date currDate = Date.valueOf(LocalDate.now());
+			
+			transactionRepository.insertTransaction(email, amount, currDate);
 			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return new ResponseEntity(responseMap, null, status);
     }
-//	
-//	private ResponseEntity<?> updateSubscription(String email) {
-//			
-//			Subscription subscription = new Subscription();
-//			
-//			subscription.setEmail(email);
-//			subscription.setSubscriptionStartDate(repository.getSubscriptionStartDate(email));
-//			subscription.setSubscriptionEndDate(repository.getSubscriptionEndDate(email));
-//	            
-//	        return new ResponseEntity<>(subscription, HttpStatus.OK);
-//
-//    }
-
-
+	
 }

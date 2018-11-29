@@ -6,7 +6,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="payPerView")
+@Table(name="pay_per_view")
 public class PayPerViewModel {
 
 	@Id
