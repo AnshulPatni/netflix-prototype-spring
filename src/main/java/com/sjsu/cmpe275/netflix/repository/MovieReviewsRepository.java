@@ -1,5 +1,6 @@
 package com.sjsu.cmpe275.netflix.repository;
 
+import java.beans.Transient;
 import java.util.List;
 
 import javax.transaction.Transactional;
@@ -21,4 +22,9 @@ public interface MovieReviewsRepository extends CrudRepository<MovieReviewsModel
     @Transactional
     void insertMovieReview(@Param("title") String title, @Param("reviewRating") int reviewRating, @Param("review") String review);
 	
+	
+	
+	@Transient
+	@Query("SELECT u.title FROM MovieReviewsModel u GROUP BY u.title ORDER BY CAST(SUM(u.reviewRating) AS float)/CAST(count(*) AS float) DESC")
+	List getScoreCardByStar();
 }

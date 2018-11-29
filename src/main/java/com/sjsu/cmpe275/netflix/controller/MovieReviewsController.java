@@ -5,11 +5,13 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -19,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sjsu.cmpe275.netflix.repository.MovieReviewsRepository;
 
 @RestController
@@ -47,5 +50,51 @@ public class MovieReviewsController {
 		}
 		return new ResponseEntity(responseMap, null, status);
 	}
+
 	
+	
+	
+	
+	@RequestMapping(value = "/scorecard", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<?> getHitory() {
+        return getScorecard();
+    }
+	
+	private ResponseEntity<?> getScorecard() {
+		ResponseEntity responseEntity = new ResponseEntity(null, HttpStatus.NOT_FOUND);
+		HttpHeaders httpHeaders = new HttpHeaders();
+		try
+		{
+			List questionOptional = repository.getScoreCardByStar(); 
+			for(Object i: questionOptional)
+			{
+				
+			}
+			System.out.printf("I ma here", questionOptional);
+			if(questionOptional.isEmpty())
+	        {
+	        	
+	        	return new ResponseEntity<>( "No Data found in this TimeFrame", HttpStatus.NOT_FOUND);
+	        	
+	        	
+	        } 
+	        else 
+	        {
+	            
+	            Map<String, Object> json = new HashMap<String, Object>();
+		        json.put("status_code", 200);
+		        json.put(" Movies in Reverse chronological order for this user: ", questionOptional);
+		        String data="";
+		        try 
+		           {
+			         ObjectMapper mapper = new ObjectMapper();
+			         data  = mapper.writeValueAsString(json);
+		            }
+	            catch(Exception e) {}
+	            return new ResponseEntity<>(data, httpHeaders, HttpStatus.OK);      
+	        }
+		}
+		catch(Exception e) {e.printStackTrace();}
+		return responseEntity;
+	}
 }
