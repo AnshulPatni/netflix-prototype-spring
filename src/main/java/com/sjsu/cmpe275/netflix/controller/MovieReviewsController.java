@@ -40,8 +40,8 @@ public class MovieReviewsController {
 
 	@RequestMapping(value = "/insertReview", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> insertMovieReview(@RequestBody Map map, HttpSession session) {
-		HttpStatus status = HttpStatus.OK;
-//		Subscription subscription = repository.getSubscriptionDetails(map.get("email").toString());
+		HttpStatus status = HttpStatus.NOT_FOUND;
+
 		Map<String, String> responseMap = new HashMap<>();
 		
 		try {	
@@ -55,12 +55,12 @@ public class MovieReviewsController {
 			
 			float avgStars = moviesRepository.getAvgStars(title);
 			int noOfReviews = moviesRepository.getNoOfReviews(title);
-			
-//			avgStars = avgStars.multiply(new BigDecimal(noOfReviews)).add(new BigDecimal(reviewRating)).divide(new BigDecimal(noOfReviews + 1));	
-			
+						
 			avgStars = ((avgStars * (float) noOfReviews) + (float) reviewRating) / ((float) (noOfReviews + 1));
 			
 			moviesRepository.updateAvgStarsAndReviewCount(title, avgStars, noOfReviews+1);
+			status = HttpStatus.OK;
+			return new ResponseEntity(responseMap, null, status);
 			
 		} catch (Exception e) {
 			e.printStackTrace();

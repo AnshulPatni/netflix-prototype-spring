@@ -57,6 +57,7 @@ public class MoviesController {
 			eachMovieMap.put("availability", eachMovie.getAvailability());
 			eachMovieMap.put("price", String.valueOf(eachMovie.getPrice()));
 			responseList.add(eachMovieMap);
+			
 		}
 
 		return new ResponseEntity(responseList, null, status);

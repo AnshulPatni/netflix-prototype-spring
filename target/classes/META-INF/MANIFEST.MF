@@ -1,9 +1,9 @@
 Manifest-Version: 1.0
+Built-By: apatni
+Build-Jdk: 10.0.2
 Implementation-Title: netflix
 Implementation-Version: 0.0.1-SNAPSHOT
-Built-By: zeali
 Implementation-Vendor-Id: com.netflixProtype
-Build-Jdk: 1.8.0_181
 Implementation-URL: https://projects.spring.io/spring-boot/#/spring-bo
  ot-starter-parent/netflix
 Created-By: Maven Integration for Eclipse

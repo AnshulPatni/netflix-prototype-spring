@@ -36,7 +36,6 @@ public class TransactionController {
 			Map<String, String> tempMap = new HashMap<>();
 			tempMap.put("message", "There are zero transactions.");
 			responseList.add(tempMap);
-			return new ResponseEntity<>(responseList, HttpStatus.NOT_FOUND);
 		} else {
 			for(TransactionModel transaction : transactions) {
 				Map<String, String> tempMap = new HashMap<>();
@@ -45,10 +44,12 @@ public class TransactionController {
 				tempMap.put("amount", Integer.toString(transaction.getAmount()));
 				tempMap.put("date", transaction.getDate().toString());
 				responseList.add(tempMap);
+				
+				return new ResponseEntity<>(responseList, HttpStatus.OK);
 			}
 		}
 		
-        return new ResponseEntity<>(responseList, HttpStatus.OK);
+		return new ResponseEntity<>(responseList, HttpStatus.NOT_FOUND);
     }
 	
 }

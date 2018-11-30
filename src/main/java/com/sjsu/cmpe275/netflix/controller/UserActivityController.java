@@ -6,6 +6,7 @@ import com.sjsu.cmpe275.netflix.repository.SubscriptionRepository;
 import org.json.*;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.sjsu.cmpe275.netflix.model.MoviesModel;
 import com.sjsu.cmpe275.netflix.model.UserActivityModel;
 
 import java.sql.Date;
@@ -304,6 +305,25 @@ public class UserActivityController {
 
 		return getUniqueSubscriber(userName);
 	}
+	
+	@RequestMapping(value = "/userHistory/{email}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> getUserHistory(@PathVariable("email") String email) {
+		
+		HttpStatus status = HttpStatus.OK;
+
+		List<Map<String, String>> responseList = new ArrayList<>();		
+		
+		List<String> userHistory = repository.getUserHistory(email);
+		
+		System.out.println(userHistory.size());
+		for(String eachMovie: userHistory) {
+			Map<String, String> eachMovieMap = new HashMap<>();
+			eachMovieMap.put("name", eachMovie);			
+			responseList.add(eachMovieMap);
+		}
+		
+		return new ResponseEntity(responseList, null, status);
+    }
 	
 }	
 	

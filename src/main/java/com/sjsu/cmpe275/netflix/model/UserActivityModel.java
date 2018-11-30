@@ -23,95 +23,88 @@ public class UserActivityModel
 	@GeneratedValue
 	@Column(name="user_activity_id")
 	private int userActivityId;
-	@Column(name="Email")
-	private String Email;
-	@Column(name="Title")
-	private String Title;
+	
+	@Column(name="email")
+	private String email;
+	
+	@Column(name="title")
+	private String title;
+	
 	@Column(name="date")
 	private Date date;
-	//@Transient
-	//private List<User> getToptenMovies;
-
-
-	//private int status;
-	//@Transient
-	//private int noOfPlay;
-	//@Transient
-    //private List<User> getToptenUser;
-	//public int getNoOfPlay() {
-	//	return noOfPlay;
-	//}
-
-
+	
+	@Column(name="movie_availability")
+	private String movieAvailability;
+	
+	public UserActivityModel() {
+		
+	}
 
 	public UserActivityModel(int userActivityId, String email, String title, Date date) {
 		super();
 		this.userActivityId = userActivityId;
-		Email = email;
-		Title = title;
+		this.email = email;
+		this.title = title;
 		this.date = date;
 	}
 	
 	
 	public UserActivityModel( String email, String title, Date date) {
 		super();
-		Email = email;
-		Title = title;
+		this.email = email;
+		this.title = title;
 		this.date = date;
 	}
-
-	//private String location;
-	//private Date Birth_date;
 	
-	public int getId() {
+	
+	
+	public UserActivityModel(int userActivityId, String email, String title, Date date, String movieAvailability) {
+		super();
+		this.userActivityId = userActivityId;
+		this.email = email;
+		this.title = title;
+		this.date = date;
+		this.movieAvailability = movieAvailability;
+	}
+
+	public int getUserActivityId() {
 		return userActivityId;
 	}
 
-
-	public void setId(int userActivityId) {
+	public void setUserActivityId(int userActivityId) {
 		this.userActivityId = userActivityId;
 	}
 
-
 	public String getEmail() {
-		return Email;
+		return email;
 	}
-
 
 	public void setEmail(String email) {
-		Email = email;
+		this.email = email;
 	}
-
 
 	public String getTitle() {
-		return Title;
+		return title;
 	}
-
 
 	public void setTitle(String title) {
-		Title = title;
+		this.title = title;
 	}
-
 
 	public Date getDate() {
 		return date;
 	}
 
-
 	public void setDate(Date date) {
 		this.date = date;
 	}
 
+	public String getMovieAvailability() {
+		return movieAvailability;
+	}
 
-	public UserActivityModel()
-	{}
-
-	
-	
-
-	
-
-	
-	
+	public void setMovieAvailability(String movieAvailability) {
+		this.movieAvailability = movieAvailability;
+	}
 
 }

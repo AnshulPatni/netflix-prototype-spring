@@ -55,9 +55,20 @@ public interface MoviesRepository extends CrudRepository<MoviesModel, Integer> {
 	void addMovieAdmin(@Param("title") String title, @Param("genre") String genre, @Param("year") int year ,@Param("studio") String studio,@Param("synopsis") String synopsis ,@Param("image_url") String image_url, @Param("actors") String actors,@Param("director") String director, @Param("country") String country, @Param("rating") String rating, @Param("availability") String availability, @Param("price") int price, @Param("movie_url") String movie_url);
 
 //
-	@Query("SELECT m FROM MoviesModel m WHERE CONCAT(m.genre, m.year, m.actors, m.director, m.rating, m.avgStars) LIKE %?1%")
-	List<MoviesModel> filterMovies(@Param("genre") String genre, @Param("year") int year, @Param("actors") String actors, @Param("director") String director, @Param("rating") String rating,  @Param("avgStars") float avgStars);
+//	@Query("SELECT m FROM MoviesModel m WHERE CONCAT(m.genre, m.year, m.actors, m.director, m.rating, m.avgStars) LIKE %?1%")
+//	List<MoviesModel> filterMovies(@Param("genre") String genre, @Param("year") int year, @Param("actors") String actors, @Param("director") String director, @Param("rating") String rating,  @Param("avgStars") float avgStars);
 
+//	@Query("DELIMITER $$"
+//			+ "CREATE PROCEDURE search_movies_new (@movieGenre  varchar(255),@movieActors varchar(255),@movieDirector varchar(255),@movieYear int,"
+//			+ "@movieRating varchar(255),@movieAvgStars float)"
+//			+ "BEGIN SET movieYear = 2013"
+//			+ "SELECT title FROM movies WHERE  (genre = @movieGenre OR @movieGenre IS NULL) AND  (actors = @movieActors OR @movieActors IS NULL)"
+//			+ " AND  (director = @movieDirector OR @movieDirector IS NULL) AND  (year = @movieYear OR @movieYear IS NULL)"
+//			+ "AND  (rating = @movieRating OR @movieRating IS NULL) AND  (avg_stars = @movieAvgStars OR @movieAvgStars IS NULL)"
+//			+ "END$$"
+//			+ "DELIMITER"
+//			+ "CALL search_movies_8(NULL, NULL, NULL, NULL, NULL, NULL)")
+//	List<MoviesModel> filterMovies(@Param("genre") String genre, @Param("actors") String actors, @Param("director") String director, @Param("year") int year, @Param("rating") String rating,  @Param("avgStars") float avgStars);	
 
 //	@Query("SELECT IFNULL((SELECT m FROM MoviesModel m WHERE m.genre) , SELECT m FROM MoviesModel m) INTERSECT SELECT IFNULL( (SELECT m FROM MoviesModel m WHERE m.year) , SELECT m FROM MoviesModel m) INTERSECT SELECT IFNULL( (SELECT m FROM MoviesModel m WHERE m.actors) , SELECT * FROM MoviesModel m) INTERSECT SELECT IFNULL( (SELECT m FROM MoviesModel m WHERE m.director) , SELECT m FROM MoviesModel m) INTERSECT SELECT IFNULL( (SELECT m FROM MoviesModel m WHERE m.rating) , SELECT m FROM MoviesModel m) INTERSECT SELECT IFNULL( (SELECT m FROM MoviesModel m WHERE m.avgStars) , SELECT * FROM MoviesModel m)")
 //	List<MoviesModel> filterMovies(@Param("genre") String genre, @Param("year") int year, @Param("actors") String actors, @Param("director") String director, @Param("rating") String rating,  @Param("avgStars") float avgStars);
