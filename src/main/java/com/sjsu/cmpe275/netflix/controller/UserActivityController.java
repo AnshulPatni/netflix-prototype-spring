@@ -171,8 +171,8 @@ public class UserActivityController {
 		     else if (time.equals("month")){ date = LocalDate.now().minusDays(30); }
 		     else {return new ResponseEntity<>( "Please choose between 24 hours, 1 week or 1 month", HttpStatus.NOT_FOUND);}
 			 HttpHeaders httpHeaders = new HttpHeaders();
-		
-			 date = LocalDate.now().minusDays(1);
+			 System.out.printf("date is",date);
+
 			 Date new_date = java.sql.Date.valueOf(date);
 			
 	         List questionOptional = repository.getTopTenUsers(new_date); 

@@ -41,7 +41,7 @@ public interface UserActivityRepository extends CrudRepository<UserActivityModel
 //	@Query("update UserActivityModel u set u.timestamp = :status where u.id = :id")
 //	int updateUserSetStatusForName(@Param("id") int id, @Param("status") java.util.Date status);
 
-	@Query("SELECT u.email FROM UserActivityModel u WHERE u.date < :date GROUP BY email ORDER BY count(*) DESC")
+	@Query("SELECT u.email FROM UserActivityModel u WHERE u.date >= :date GROUP BY email ORDER BY count(*) DESC")
 	List getTopTenUsers(@Param("date") Date date);
 	
 	@Query("SELECT u.title FROM UserActivityModel u WHERE u.date >= :date GROUP BY title ORDER BY count(*) DESC")

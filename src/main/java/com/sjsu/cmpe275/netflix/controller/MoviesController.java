@@ -218,7 +218,7 @@ public class MoviesController {
     
 	private ResponseEntity<?> delMovie(String title)
 	{
-		ResponseEntity responseEntity = new ResponseEntity(null, HttpStatus.NOT_FOUND);
+		ResponseEntity responseEntity = new ResponseEntity(null,null,HttpStatus.NOT_FOUND);
 		String data = "";
 	try
 	{
