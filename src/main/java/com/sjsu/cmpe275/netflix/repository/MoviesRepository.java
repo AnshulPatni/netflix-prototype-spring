@@ -66,6 +66,9 @@ public interface MoviesRepository extends CrudRepository<MoviesModel, Integer> {
 //	@Query("SELECT ALL FROM MoviesModel m WHERE m.genre INTERSECT SELECT ALL FROM MoviesModel m WHERE m.year INTERSECT SELECT IFNULL( (SELECT * FROM MoviesModel m WHERE m.actors) , SELECT * FROM MoviesModel) INTERSECT SELECT IFNULL( (SELECT * FROM MoviesModel m WHERE m.director) , SELECT * FROM MoviesModel) INTERSECT SELECT IFNULL( (SELECT * FROM MoviesModel m WHERE m.rating) , SELECT * FROM MoviesModel) INTERSECT SELECT IFNULL( (SELECT * FROM MoviesModel m WHERE m.avgStars) , SELECT * FROM MoviesModel)")
 //	List<MoviesModel> filterMovies(@Param("genre") String genre, @Param("year") int year, @Param("actors") String actors, @Param("director") String director, @Param("rating") String rating,  @Param("avgStars") float avgStars);
 
+	@Modifying
+	@Query("UPDATE MoviesModel m set m.title = :title, m.genre = :genre, m.year = :year, m.studio = :studio, m.synopsis = :synopsis, m.imageUrl = :image_url, m.actors = :actors, m.director = :director, m.country = :country, m.rating = :rating,  m.availability = :availability, m.price = :price, m.movie_url = :movie_url WHERE m.title = :title")
+	void editMovieAdmin(@Param("title") String title, @Param("genre") String genre, @Param("year") int year ,@Param("studio") String studio,@Param("synopsis") String synopsis ,@Param("image_url") String image_url, @Param("actors") String actors,@Param("director") String director, @Param("country") String country, @Param("rating") String rating, @Param("availability") String availability, @Param("price") int price, @Param("movie_url") String movie_url);
 
 
 
