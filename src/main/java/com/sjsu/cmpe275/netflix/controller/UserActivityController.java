@@ -325,6 +325,8 @@ public class UserActivityController {
 		return new ResponseEntity(responseList, null, status);
     }
 	
+	
+	
 }	
 	
 	

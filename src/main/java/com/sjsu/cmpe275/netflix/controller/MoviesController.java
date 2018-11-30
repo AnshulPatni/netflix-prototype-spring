@@ -210,6 +210,42 @@ public class MoviesController {
 	}
 	
 	
+	@RequestMapping(value = "/delMovie/{title}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> deleteMovie(@PathVariable("title") String title)
+	{
+		return delMovie(title);
+	}
+    
+	private ResponseEntity<?> delMovie(String title)
+	{
+		ResponseEntity responseEntity = new ResponseEntity(null, HttpStatus.NOT_FOUND);
+		String data = "";
+	try
+	{
+		    repository.delMovieByAdmin(title); 
+            HttpHeaders httpHeaders = new HttpHeaders();			
+            return new ResponseEntity<>(responseEntity, httpHeaders, HttpStatus.OK);      
+	}
+	catch(Exception e)
 	
+	{e.printStackTrace();}
+	return responseEntity;
+		
+		/*
+		ResponseEntity responseEntity = new ResponseEntity("server error", HttpStatus.NOT_FOUND);
+		HttpHeaders httpHeaders = new HttpHeaders();
+		try
+		{
+			
+			repository.addMovieAdmin(title, genre, year, studio, synopsis, image_url, actors, director, country, rating, availability, price, movie_url); 
+	        return new ResponseEntity<>("server_success", null, HttpStatus.OK);      
+	        }
+		
+		catch(Exception e) {e.printStackTrace();}
+		return responseEntity;*/
 
+	}
+	
+	
+	
 }

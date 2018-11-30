@@ -142,8 +142,11 @@ public interface MoviesRepository extends CrudRepository<MoviesModel, Integer> {
 //	AND (@lEmailPromotion IS NULL OR EmailPromotion = @lEmailPromotion)
 //	AND (@lPhone IS NULL OR Phone = @lPhone)
 //	ORDER BY ContactID
+	@Modifying
+	@Query("Delete FROM MoviesModel m WHERE m.title =:title")
+	void delMovieByAdmin(@Param("title") String title);
 
-
+	
 }
 
 
