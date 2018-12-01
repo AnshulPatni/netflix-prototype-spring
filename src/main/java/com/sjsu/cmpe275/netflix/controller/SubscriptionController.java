@@ -4,12 +4,11 @@ import java.sql.Date;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
-import java.util.Calendar;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 import javax.servlet.http.HttpSession;
 
+import com.sjsu.cmpe275.netflix.model.MoviesModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -149,5 +148,21 @@ public class SubscriptionController {
 		}
 		return new ResponseEntity(responseMap, null, status);
     }
-	
+
+
+
+
+
+	//API 6(a)-(i)
+	@RequestMapping(value = "/uniqueSubscription/{date}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<?> forUniqueSubscriber(@PathVariable("date") Date date) {
+		HttpStatus status = HttpStatus.OK;
+		List uniqueSubscriberList = repository.getUniqueSubscriber(date);
+		return new ResponseEntity(uniqueSubscriberList, null, status);
+	}
+
+
+
+
+
 }

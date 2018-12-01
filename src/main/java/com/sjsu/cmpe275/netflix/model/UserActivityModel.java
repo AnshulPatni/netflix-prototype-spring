@@ -23,6 +23,7 @@ public class UserActivityModel
 	@GeneratedValue
 	@Column(name="user_activity_id")
 	private int userActivityId;
+
 	
 	@Column(name="email")
 	private String email;
@@ -39,6 +40,21 @@ public class UserActivityModel
 	public UserActivityModel() {
 		
 	}
+
+	//@Transient
+	//private List<User> getToptenMovies;
+
+
+	//private int status;
+	//@Transient
+	//private int noOfPlay;
+	//@Transient
+    //private List<User> getToptenUser;
+	//public int getNoOfPlay() {
+	//	return noOfPlay;
+	//}
+
+
 
 	public UserActivityModel(int userActivityId, String email, String title, Date date) {
 		super();
@@ -89,6 +105,7 @@ public class UserActivityModel
 
 	public void setTitle(String title) {
 		this.title = title;
+
 	}
 
 	public Date getDate() {

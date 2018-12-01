@@ -3,6 +3,7 @@ package com.sjsu.cmpe275.netflix.controller;
 import java.sql.Date;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -107,6 +108,15 @@ public class PlayController {
 		}
 		
 		return new ResponseEntity(responseMap, null, status);
+	}
+
+
+//	FOR TOTAL_UNIQUE_ACTIVE_USER
+	@RequestMapping(value = "/totalUniqueActiveUser/{date}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<?> forTotalUniqueActiveUser(@PathVariable("date") Date date) {
+		HttpStatus status = HttpStatus.OK;
+		List uniqueActiveUserList = userActivityRepository.getTotalUniqueActiveUser(date);
+		return new ResponseEntity(uniqueActiveUserList, null, status);
 	}
 
 }

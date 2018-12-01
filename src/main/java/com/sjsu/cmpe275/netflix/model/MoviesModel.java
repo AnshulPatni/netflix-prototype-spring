@@ -1,9 +1,6 @@
 package com.sjsu.cmpe275.netflix.model;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.util.Map;
 
 @Entity
@@ -222,3 +219,15 @@ public class MoviesModel {
 	}
 	
 }
+/*@NamedStoredProcedureQueries({
+		@NamedStoredProcedureQuery(name = "filter_procedure1",
+				procedureName = "filter_procedure1",
+				parameters = {
+						@StoredProcedureParameter(mode = ParameterMode.IN, name = "genre", type = String.class),
+						@StoredProcedureParameter(mode = ParameterMode.IN, name = "year", type = Integer.class),
+						@StoredProcedureParameter(mode = ParameterMode.IN, name = "actors", type = String.class),
+						@StoredProcedureParameter(mode = ParameterMode.IN, name = "director", type = String.class),
+						@StoredProcedureParameter(mode = ParameterMode.IN, name = "rating", type = String.class),
+						@StoredProcedureParameter(mode = ParameterMode.IN, name = "avgStars", type = Float.class)
+				}),
+})*/

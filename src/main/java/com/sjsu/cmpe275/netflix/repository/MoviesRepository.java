@@ -12,6 +12,7 @@ import javax.transaction.Transactional;
 import com.sjsu.cmpe275.netflix.model.MoviesModel;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.jpa.repository.query.Procedure;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
@@ -80,6 +81,23 @@ public interface MoviesRepository extends CrudRepository<MoviesModel, Integer> {
 	@Modifying
 	@Query("UPDATE MoviesModel m set m.title = :title, m.genre = :genre, m.year = :year, m.studio = :studio, m.synopsis = :synopsis, m.imageUrl = :image_url, m.actors = :actors, m.director = :director, m.country = :country, m.rating = :rating,  m.availability = :availability, m.price = :price, m.movie_url = :movie_url WHERE m.title = :title")
 	void editMovieAdmin(@Param("title") String title, @Param("genre") String genre, @Param("year") int year ,@Param("studio") String studio,@Param("synopsis") String synopsis ,@Param("image_url") String image_url, @Param("actors") String actors,@Param("director") String director, @Param("country") String country, @Param("rating") String rating, @Param("availability") String availability, @Param("price") int price, @Param("movie_url") String movie_url);
+
+	//@Procedure(name = "filter_procedure1")
+
+//	SELECT title
+//	FROM   netflix.movies
+//	WHERE  (genre = movieGenre OR movieGenre IS NULL)
+//	AND  (year = movieYear OR movieYear IS NULL)
+//	AND  (actors = movieActors OR movieActors IS NULL)
+//	AND  (director = movieDirector OR movieDirector IS NULL)
+//	AND  (rating = movieRating OR movieRating IS NULL)
+//	AND  (avg_stars = movieAvgStars OR movieAvgStars IS NULL);
+
+//    @Query("SELECT m.title, m.genre, m.year, m.studio, m.synopsis, m.imageUrl, m.actors, m.director, m.country, m.rating, m.availability, m.avgStars, m.noOfReviews FROM MoviesModel m WHERE (m.genre = :genre OR :genre is NULL ) AND (m.year = :year OR :year = 0) AND (m.actors = :actors OR :actors IS NULL) AND (m.director = :director OR :director IS NULL) AND (m.rating = :rating OR :rating IS NULL) AND (m.avgStars = :avgStars OR :avgStars = 0.0)")
+	//@Query(value = "SELECT m.title FROM MoviesModel m WHERE m.genre = genre OR genre IS NULL ", nativeQuery = true)
+	@Query("SELECT m FROM MoviesModel m WHERE (m.genre = :genre OR :genre is NULL ) AND (m.year = :year OR :year = 0) AND (m.actors = :actors OR :actors IS NULL) AND (m.director = :director OR :director IS NULL) AND (m.rating = :rating OR :rating IS NULL) AND (m.avgStars = :avgStars OR :avgStars = 0.0)")
+	List<MoviesModel> filterBY(@Param("genre") String genre, @Param("year") int year, @Param("actors") String actors, @Param("director") String director, @Param("rating") String rating,  @Param("avgStars") float avgStars);
+
 
 
 

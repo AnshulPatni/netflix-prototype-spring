@@ -1,6 +1,7 @@
 package com.sjsu.cmpe275.netflix.controller;
 
 
+import com.sjsu.cmpe275.netflix.model.MoviesModel;
 import com.sjsu.cmpe275.netflix.repository.MoviesRepository;
 import com.sjsu.cmpe275.netflix.repository.SubscriptionRepository;
 import org.json.*;
@@ -54,9 +55,6 @@ public class UserActivityController {
 	
 	@Autowired
 	UserActivityRepository repository;
-
-	@Autowired
-	SubscriptionRepository repository1;
 	
 	
 	
@@ -290,20 +288,33 @@ public class UserActivityController {
 		return responseEntity;
 
 
-
-
-
-
 	}
 
 
 
-	//API 6(a)-(i)
-	@RequestMapping(value = "/uniqueSubscription/", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<?> getUniqueSubscriber(@PathVariable("uniqueSubscription") String userName) {
-		
 
-		return getUniqueSubscriber(userName);
+
+//	@RequestMapping(value = "/uniqueActiveUser/{userName}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+//	public ResponseEntity<?> forUniqueActiveUser(@PathVariable("userName") String userName) {
+//		HttpStatus status = HttpStatus.OK;
+//		List uniqueSubscriberList = repository.getUniqueActiveUser(userName);
+//		return new ResponseEntity(uniqueSubscriberList, null, status);
+//	}
+//
+//	@RequestMapping(value = "/totalUniqueUser/{userName}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+//	public ResponseEntity<?> forUniqueActiveUser(@PathVariable("userName") String userName) {
+//		HttpStatus status = HttpStatus.OK;
+//		List uniqueSubscriberList = repository.getUniqueActiveUser(userName);
+//		return new ResponseEntity(uniqueSubscriberList, null, status);
+//	}
+
+
+	//	FOR TOTAL_UNIQUE_USER
+	@RequestMapping(value = "/totalUniqueUser/{date}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<?> forTotalUniqueUser(@PathVariable("date") Date date) {
+		HttpStatus status = HttpStatus.OK;
+		List uniqueActiveUserList = repository.getTotalUniqueUser(date);
+		return new ResponseEntity(uniqueActiveUserList, null, status);
 	}
 	
 	@RequestMapping(value = "/userHistory/{email}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)

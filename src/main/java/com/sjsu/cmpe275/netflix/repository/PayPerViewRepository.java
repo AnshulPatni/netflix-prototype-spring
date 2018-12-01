@@ -1,6 +1,7 @@
 package com.sjsu.cmpe275.netflix.repository;
 
 import java.sql.Date;
+import java.util.List;
 
 import javax.transaction.Transactional;
 
@@ -26,5 +27,8 @@ public interface PayPerViewRepository extends CrudRepository<PayPerViewModel, In
 	@Query(value = "INSERT INTO pay_per_view (email, title, status) VALUES (:email, :title, :status)", nativeQuery = true)
 	@Transactional
 	void insertPayPerView(@Param("email") String email, @Param("title") String title, @Param("status") String status);
-	
+
+//    //Get unqiue payperviewuser
+//	@Query("SELECT u.email FROM UserActivityModel u WHERE u.date <= :date AND u.movieAvailabilty LIKE 'perperview%'")
+//	List getUniquePayPerViewUser(@Param("date") Date date);
 }

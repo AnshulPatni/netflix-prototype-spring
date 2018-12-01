@@ -43,8 +43,9 @@ public interface SubscriptionRepository extends CrudRepository<SubscriptionModel
 
 
 //	//Getting number of unique subscription users
-//	@Query("SELECT s.email FROM SubscriptionModel s WHERE s.subscriptionEndDate <= :date")
-//	List getUniqueSubscriber(@Param("email") String email);
+	@Query("SELECT s.email FROM SubscriptionModel s WHERE s.subscriptionEndDate <= :date")
+	List getUniqueSubscriber(@Param("date") Date date);
+
 
 }
 
