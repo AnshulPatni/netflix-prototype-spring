@@ -119,6 +119,7 @@ public class UserActivityController {
 			        else {return new ResponseEntity<>( "Please choose between 24 hours, 1 week or 1 month", HttpStatus.NOT_FOUND);}
 				    String data = "";
 				    Date new_date = java.sql.Date.valueOf(date);
+				    System.out.printf("date is", new_date);
 		            int questionOptional = repository.getDatabyNameAndPeriod(new_date, title); 
 		            //System.out.printf("Value of date", questionOptional);
 		            if(questionOptional != 0)

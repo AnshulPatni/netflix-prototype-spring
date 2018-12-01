@@ -14,6 +14,7 @@ import java.util.List;
 import java.util.Map;
 
 @RestController
+@CrossOrigin(origins = "*", allowCredentials = "true")
 @RequestMapping(value = "/movies")
 public class SearchFilterController {
 

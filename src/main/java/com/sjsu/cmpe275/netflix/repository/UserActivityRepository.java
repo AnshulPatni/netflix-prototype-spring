@@ -34,7 +34,7 @@ public interface UserActivityRepository extends CrudRepository<UserActivityModel
 	List findAllActiveUsers(@Param("title") String title);
 	
 	
-	@Query("SELECT count(*) FROM UserActivityModel u WHERE u.date < :time and u.title = :title")
+	@Query("SELECT count(*) FROM UserActivityModel u WHERE u.date >= :time and u.title = :title")
 	int getDatabyNameAndPeriod(@Param("time") Date time, @Param("title") String title);
 	
 //	@Modifying
