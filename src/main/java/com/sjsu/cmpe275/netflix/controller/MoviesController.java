@@ -56,6 +56,7 @@ public class MoviesController {
 			eachMovieMap.put("rating", eachMovie.getRating());
 			eachMovieMap.put("availability", eachMovie.getAvailability());
 			eachMovieMap.put("price", String.valueOf(eachMovie.getPrice()));
+			eachMovieMap.put("movieUrl", eachMovie.getMovieUrl());
 			responseList.add(eachMovieMap);
 			
 		}
@@ -88,7 +89,7 @@ public class MoviesController {
 			eachMovieMap.put("rating", eachMovie.getRating());
 			eachMovieMap.put("availability", eachMovie.getAvailability());
 			eachMovieMap.put("price", String.valueOf(eachMovie.getPrice()));
-			
+			eachMovieMap.put("movieUrl", eachMovie.getMovieUrl());
 			responseList.add(eachMovieMap);
 		}
 		
@@ -105,16 +106,16 @@ public class MoviesController {
 		int year = (int) map.get("year");
 		String studio = (String) map.get("studio");
 		String synopsis = (String) map.get("synopsis");
-		String image_url = (String) map.get("image_url");
+		String imageUrl = (String) map.get("image_url");
 		String actors = (String) map.get("actors");
 		String director = (String) map.get("director");
 		String country = (String) map.get("country");
 		String rating =  (String) map.get("rating");
 		String availability = (String) map.get("availability");
 		int price = (int) map.get("price");
-		String movie_url = (String) map.get("movie_url");
+		String movieUrl = (String) map.get("movie_url");
 		
-		return addMovie(title, genre, year, studio, synopsis, image_url, actors, director, country, rating, availability, price, movie_url);
+		return addMovie(title, genre, year, studio, synopsis, imageUrl, actors, director, country, rating, availability, price, movieUrl);
 		
 		
 }
@@ -173,19 +174,19 @@ public class MoviesController {
 		String rating =  (String) map.get("rating");
 		String availability = (String) map.get("availability");
 		int price = (int) map.get("price");
-		String movie_url = (String) map.get("movie_url");
+		String movieUrl = (String) map.get("movie_url");
 		
-		return editMovie(title, genre, year, studio, synopsis, image_url, actors, director, country, rating, availability, price, movie_url);
+		return editMovie(title, genre, year, studio, synopsis, image_url, actors, director, country, rating, availability, price, movieUrl);
 		
 		
 }
-	private ResponseEntity<?> editMovie(String title,String genre,int year,String studio,String synopsis,String image_url,String actors,String director,String country, String rating,String availability,int price, String movie_url)
+	private ResponseEntity<?> editMovie(String title,String genre,int year,String studio,String synopsis,String image_url,String actors,String director,String country, String rating,String availability,int price, String movieUrl)
 	{
 		ResponseEntity responseEntity = new ResponseEntity(null, HttpStatus.NOT_FOUND);
 		String data = "";
 	try
 	{
-		    repository.editMovieAdmin(title, genre, year, studio, synopsis, image_url, actors, director, country, rating, availability, price, movie_url); 
+		    repository.editMovieAdmin(title, genre, year, studio, synopsis, image_url, actors, director, country, rating, availability, price, movieUrl); 
             HttpHeaders httpHeaders = new HttpHeaders();			
             return new ResponseEntity<>(responseEntity, httpHeaders, HttpStatus.OK);      
 	}

@@ -52,15 +52,15 @@ public class MoviesModel {
 
 
 	@Column(name = "movie_url")
-	private String movie_url;
+	private String movieUrl;
 	
 	
-	public String getMovie_url() {
-		return movie_url;
+	public String getMovieUrl() {
+		return movieUrl;
 	}
 
-	public void setMovie_url(String movie_url) {
-		this.movie_url = movie_url;
+	public void setMovieUrl(String movieUrl) {
+		this.movieUrl = movieUrl;
 	}
 
 
@@ -88,7 +88,7 @@ public class MoviesModel {
 	
 	public MoviesModel(String title, String genre, int year, String studio, String synopsis, String imageUrl,
 			String actors, String director, String country, String rating, String availability, int price,
-			float avgStars, int noOfReviews) {
+			float avgStars, int noOfReviews, String movieUrl) {
 		super();
 		this.title = title;
 		this.genre = genre;
@@ -104,6 +104,7 @@ public class MoviesModel {
 		this.price = price;
 		this.avgStars = avgStars;
 		this.noOfReviews = noOfReviews;
+		this.movieUrl = movieUrl;
 	}
 
 	public String getTitle() {

@@ -52,8 +52,8 @@ public class SubscriptionController {
     }
 	
 	@SuppressWarnings("unchecked")
-	@RequestMapping(value = "/checkBillingStatus/{email}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> checkBillingStatus(@PathVariable("email") String email) {
+	@RequestMapping(value = "/checkSubscriptionStatus/{email}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> checkSubscriptionStatus(@PathVariable("email") String email) {
 		HttpStatus status = HttpStatus.OK;
 		Map<String, String> responseMap = new HashMap<>();
 		
@@ -95,8 +95,8 @@ public class SubscriptionController {
 		int month = (int) map.get("month");
 		Map<String, String> responseMap = new HashMap<>();
 		String email = map.get("email").toString();
-		int amount = (int) map.get("amount");
 		int days = month * 30;
+		int amount = month * 10;
 		
 		responseMap.put("email", email);
 		

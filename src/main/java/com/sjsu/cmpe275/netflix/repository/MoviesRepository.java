@@ -1,23 +1,15 @@
 package com.sjsu.cmpe275.netflix.repository;
 
-import java.math.BigDecimal;
-
-import java.sql.Date;
-
 import java.util.List;
-import java.util.Map;
 
 import javax.transaction.Transactional;
 
 import com.sjsu.cmpe275.netflix.model.MoviesModel;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.jpa.repository.query.Procedure;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
-import com.sjsu.cmpe275.netflix.model.MoviesModel;
-import org.springframework.web.bind.annotation.RequestParam;
 
 @Repository
 @Transactional
@@ -52,8 +44,8 @@ public interface MoviesRepository extends CrudRepository<MoviesModel, Integer> {
 
 
 	@Modifying
-	@Query(value = "INSERT into movies (title, genre, year, studio, synopsis, image_url, actors, director, country, rating, availability, price, movie_url) VALUES (:title, :genre, :year, :studio, :synopsis, :image_url, :actors, :director, :country, :rating, :availability, :price, :movie_url)", nativeQuery = true)
-	void addMovieAdmin(@Param("title") String title, @Param("genre") String genre, @Param("year") int year ,@Param("studio") String studio,@Param("synopsis") String synopsis ,@Param("image_url") String image_url, @Param("actors") String actors,@Param("director") String director, @Param("country") String country, @Param("rating") String rating, @Param("availability") String availability, @Param("price") int price, @Param("movie_url") String movie_url);
+	@Query(value = "INSERT into movies (title, genre, year, studio, synopsis, image_url, actors, director, country, rating, availability, price, movie_url) VALUES (:title, :genre, :year, :studio, :synopsis, :imageUrl, :actors, :director, :country, :rating, :availability, :price, :movieUrl)", nativeQuery = true)
+	void addMovieAdmin(@Param("title") String title, @Param("genre") String genre, @Param("year") int year ,@Param("studio") String studio,@Param("synopsis") String synopsis ,@Param("imageUrl") String imageUrl, @Param("actors") String actors,@Param("director") String director, @Param("country") String country, @Param("rating") String rating, @Param("availability") String availability, @Param("price") int price, @Param("movieUrl") String movieUrl);
 
 //
 //	@Query("SELECT m FROM MoviesModel m WHERE CONCAT(m.genre, m.year, m.actors, m.director, m.rating, m.avgStars) LIKE %?1%")
@@ -79,8 +71,8 @@ public interface MoviesRepository extends CrudRepository<MoviesModel, Integer> {
 //	List<MoviesModel> filterMovies(@Param("genre") String genre, @Param("year") int year, @Param("actors") String actors, @Param("director") String director, @Param("rating") String rating,  @Param("avgStars") float avgStars);
 
 	@Modifying
-	@Query("UPDATE MoviesModel m set m.title = :title, m.genre = :genre, m.year = :year, m.studio = :studio, m.synopsis = :synopsis, m.imageUrl = :image_url, m.actors = :actors, m.director = :director, m.country = :country, m.rating = :rating,  m.availability = :availability, m.price = :price, m.movie_url = :movie_url WHERE m.title = :title")
-	void editMovieAdmin(@Param("title") String title, @Param("genre") String genre, @Param("year") int year ,@Param("studio") String studio,@Param("synopsis") String synopsis ,@Param("image_url") String image_url, @Param("actors") String actors,@Param("director") String director, @Param("country") String country, @Param("rating") String rating, @Param("availability") String availability, @Param("price") int price, @Param("movie_url") String movie_url);
+	@Query("UPDATE MoviesModel m set m.title = :title, m.genre = :genre, m.year = :year, m.studio = :studio, m.synopsis = :synopsis, m.imageUrl = :imageUrl, m.actors = :actors, m.director = :director, m.country = :country, m.rating = :rating,  m.availability = :availability, m.price = :price, m.movieUrl = :movieUrl WHERE m.title = :title")
+	void editMovieAdmin(@Param("title") String title, @Param("genre") String genre, @Param("year") int year ,@Param("studio") String studio,@Param("synopsis") String synopsis ,@Param("imageUrl") String imageUrl, @Param("actors") String actors,@Param("director") String director, @Param("country") String country, @Param("rating") String rating, @Param("availability") String availability, @Param("price") int price, @Param("movieUrl") String movieUrl);
 
 	//@Procedure(name = "filter_procedure1")
 
@@ -99,67 +91,12 @@ public interface MoviesRepository extends CrudRepository<MoviesModel, Integer> {
 	List<MoviesModel> filterBY(@Param("genre") String genre, @Param("year") int year, @Param("actors") String actors, @Param("director") String director, @Param("rating") String rating,  @Param("avgStars") float avgStars);
 
 
-
-
-	//			( SELECT *
-//			FROM MoviesModel m
-//			WHERE (number = '1101'
-//					OR number = '481101')
-//			UNION ALL
-//			SELECT *
-//					FROM dynamicsql PARTITION(dynamicsql_200012b)
-//			WHERE (number = '1101'
-//					OR number = '481101')
-//			);
-//			FROM"MoviesModel m WHERE CONCAT(m.genre, m.year, m.actors, m.director, m.rating, m.avgStars) LIKE %?1%")
-
-//
-//	@Query("SELECT * FROM MovieModel m WHERE(m.genre IS NULL OR m.genre = @lContactID)
-//	AND (@lFirstName IS NULL OR FirstName LIKE '%' + @lFirstName + '%')
-//	AND (@lLastName IS NULL OR LastName LIKE '%' + @lLastName + '%')
-//	AND (@lEmailAddress IS NULL OR EmailAddress LIKE '%' + @lEmailAddress + '%')
-//	AND (@lEmailPromotion IS NULL OR EmailPromotion = @lEmailPromotion)
-//	AND (@lPhone IS NULL OR Phone = @lPhone))
-//
-//	SELECT NVL(COUNT(*), 0) st
-//	FROM ( SELECT *
-//					FROM dynamicsql PARTITION(dynamicsql_200012a)
-//	WHERE (number = '1101'
-//			OR number = '481101')
-//	UNION ALL
-//	SELECT *
-//	FROM dynamicsql PARTITION(dynamicsql_200012b)
-//	WHERE (number = '1101'
-//			OR number = '481101')
-//       );
-
-	//        genre, year, actors, directors, MPAA rating, and number of stars
-
 //	@Modifying
 //	@Query("UPDATE MoviesModel s set s.star_rating = :star_rating WHERE s.email = :email")
 //	void updateSubscriptionStartDate(@Param("email") String email, @Param("subscriptionStartDate") Date subscriptionStartDate);
 
 
 
-//	SELECT
-//			ContactID,
-//			Title,
-//			FirstName,
-//			MiddleName,
-//			LastName,
-//			Suffix,
-//			EmailAddress,
-//			EmailPromotion,
-//			Phone
-//	FROM [Person].[Contact]
-//	Where
-//			(@lContactID IS NULL OR ContactID = @lContactID)
-//	AND (@lFirstName IS NULL OR FirstName LIKE '%' + @lFirstName + '%')
-//	AND (@lLastName IS NULL OR LastName LIKE '%' + @lLastName + '%')
-//	AND (@lEmailAddress IS NULL OR EmailAddress LIKE '%' + @lEmailAddress + '%')
-//	AND (@lEmailPromotion IS NULL OR EmailPromotion = @lEmailPromotion)
-//	AND (@lPhone IS NULL OR Phone = @lPhone)
-//	ORDER BY ContactID
 	@Modifying
 	@Query("Delete FROM MoviesModel m WHERE m.title =:title")
 	void delMovieByAdmin(@Param("title") String title);
