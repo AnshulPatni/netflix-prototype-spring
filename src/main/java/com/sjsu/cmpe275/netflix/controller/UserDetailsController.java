@@ -1,6 +1,7 @@
 package com.sjsu.cmpe275.netflix.controller;
 
 import java.sql.Date;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 import com.sjsu.cmpe275.netflix.repository.UserActivityRepository;
@@ -47,7 +48,29 @@ public class UserDetailsController {
 	@RequestMapping(value = "/totalUniqueActiveUser/{year}/{month}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<?> forTotalUniqueActiveUser(@PathVariable("year") int year, @PathVariable("month") int month) {
 		HttpStatus status = HttpStatus.OK;
-		int totalUniqueActiveUserList = userDetailsRepository.getTotalActiveUniqueUser(year, month);
+		String startDateString = "" + year + "-" + month + "-01";
+		if(month == 12){
+			year += 1;
+			month = 1;
+		}
+		else {
+			month = month + 1;
+		}
+		String endDateString = "" + year + "-" + month + "-01";
+		System.out.println(startDateString);
+		System.out.println(endDateString);
+
+		SimpleDateFormat format = new SimpleDateFormat("yyyy-mm-dd");
+		Date startDate=Date.valueOf(startDateString);
+		Date endDate=Date.valueOf(endDateString);
+//		Date startDate = format.parse("startDateString");
+//		Date endDate = format.parse("startDateString");
+//
+//		java.sql.Date sql = new java.sql.Date(parsed.getTime());
+
+		System.out.println(startDate);
+		System.out.println(endDate);
+		int totalUniqueActiveUserList = userDetailsRepository.getTotalActiveUniqueUser(startDate, endDate);
 		return new ResponseEntity(totalUniqueActiveUserList, null, status);
 	}
 
@@ -55,7 +78,29 @@ public class UserDetailsController {
 	@RequestMapping(value = "/totalUniqueUser/{year}/{month}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<?> forTotalUniqueUser(@PathVariable("year") int year, @PathVariable("month") int month) {
 		HttpStatus status = HttpStatus.OK;
-		int uniqueActiveUserList = userDetailsRepository.getTotalUniqueUser(year, month);
+		String startDateString = "" + year + "-" + month + "-01";
+		if(month == 12){
+			year += 1;
+			month = 1;
+		}
+		else {
+			month = month + 1;
+		}
+		String endDateString = "" + year + "-" + month + "-01";
+		System.out.println(startDateString);
+		System.out.println(endDateString);
+
+		SimpleDateFormat format = new SimpleDateFormat("yyyy-mm-dd");
+		Date startDate=Date.valueOf(startDateString);
+		Date endDate=Date.valueOf(endDateString);
+//		Date startDate = format.parse("startDateString");
+//		Date endDate = format.parse("startDateString");
+//
+//		java.sql.Date sql = new java.sql.Date(parsed.getTime());
+
+		System.out.println(startDate);
+		System.out.println(endDate);
+		int uniqueActiveUserList = userDetailsRepository.getTotalUniqueUser(startDate, endDate);
 		return new ResponseEntity(uniqueActiveUserList, null, status);
 	}
 

@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RestController;
 @CrossOrigin(origins = "*", allowCredentials = "true")
 @RequestMapping(value = "/report")
 public class LoginRegisterController {
-    
+
 	
 
 }

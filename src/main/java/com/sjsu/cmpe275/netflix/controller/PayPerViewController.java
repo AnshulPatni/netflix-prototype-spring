@@ -108,7 +108,13 @@ public class PayPerViewController {
 	public ResponseEntity<?> forUniquePayPerViewUser(@PathVariable("year") int year, @PathVariable("month") int month) {
 		HttpStatus status = HttpStatus.OK;
 		String startDateString = "" + year + "-" + month + "-01";
-		month = month + 1;
+		if(month == 12){
+			year += 1;
+			month = 1;
+		}
+		else {
+			month = month + 1;
+		}
 		String endDateString = "" + year + "-" + month + "-01";
 		System.out.println(startDateString);
 		System.out.println(endDateString);
