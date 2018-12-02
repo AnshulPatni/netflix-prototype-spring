@@ -89,9 +89,7 @@ public interface UserActivityRepository extends CrudRepository<UserActivityModel
 	List getTotalUniqueActiveUser(@Param("date") Date date);
 
 
-	//For TotalUniqueUser
-	@Query("SELECT DISTINCT u.email FROM UserActivityModel u WHERE u.date LIKE CONCAT('%-',:date,'-%')")
-	List getTotalUniqueUser(@Param("date") Date date);
+
 
 
 }

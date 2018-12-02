@@ -27,6 +27,7 @@ public class TransactionModel {
 	@Column(name="transaction_type")
 	private String transactionType;
 
+
 	public TransactionModel() {
 		
 	}

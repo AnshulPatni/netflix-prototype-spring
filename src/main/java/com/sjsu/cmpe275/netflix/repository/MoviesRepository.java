@@ -95,7 +95,7 @@ public interface MoviesRepository extends CrudRepository<MoviesModel, Integer> {
 
 //    @Query("SELECT m.title, m.genre, m.year, m.studio, m.synopsis, m.imageUrl, m.actors, m.director, m.country, m.rating, m.availability, m.avgStars, m.noOfReviews FROM MoviesModel m WHERE (m.genre = :genre OR :genre is NULL ) AND (m.year = :year OR :year = 0) AND (m.actors = :actors OR :actors IS NULL) AND (m.director = :director OR :director IS NULL) AND (m.rating = :rating OR :rating IS NULL) AND (m.avgStars = :avgStars OR :avgStars = 0.0)")
 	//@Query(value = "SELECT m.title FROM MoviesModel m WHERE m.genre = genre OR genre IS NULL ", nativeQuery = true)
-	@Query("SELECT m FROM MoviesModel m WHERE (m.genre = :genre OR :genre is NULL ) AND (m.year = :year OR :year = 0) AND (m.actors = :actors OR :actors IS NULL) AND (m.director = :director OR :director IS NULL) AND (m.rating = :rating OR :rating IS NULL) AND (m.avgStars = :avgStars OR :avgStars = 0.0)")
+	@Query("SELECT m FROM MoviesModel m WHERE (m.genre = :genre OR :genre is NULL ) AND (m.year = :year OR :year = 0) AND (m.actors = :actors OR :actors IS NULL) AND (m.director = :director OR :director IS NULL) AND (m.rating = :rating OR :rating IS NULL) AND (m.avgStars > :avgStars OR :avgStars = 0.0)")
 	List<MoviesModel> filterBY(@Param("genre") String genre, @Param("year") int year, @Param("actors") String actors, @Param("director") String director, @Param("rating") String rating,  @Param("avgStars") float avgStars);
 
 

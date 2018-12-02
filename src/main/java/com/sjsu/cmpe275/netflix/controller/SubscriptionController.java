@@ -157,7 +157,7 @@ public class SubscriptionController {
 	@RequestMapping(value = "/uniqueSubscription/{date}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<?> forUniqueSubscriber(@PathVariable("date") Date date) {
 		HttpStatus status = HttpStatus.OK;
-		List uniqueSubscriberList = repository.getUniqueSubscriber(date);
+		int uniqueSubscriberList = repository.getUniqueSubscriber(date);
 		return new ResponseEntity(uniqueSubscriberList, null, status);
 	}
 

@@ -24,5 +24,19 @@ public interface TransactionRepository extends CrudRepository<TransactionModel, 
 	
 	@Query("SELECT m FROM TransactionModel m")
 	List<TransactionModel> getTransactions();
+
+
+	//For ForSubscriptionIncome
+	@Query("SELECT SUM(t.amount) FROM TransactionModel t WHERE t.transactionType LIKE '%Subscription%' AND t.date LIKE CONCAT('%-',:date,'-%')")
+	int getSubscriptionIncome(@Param("date") int date);
+
+
+	//For PayPerViewIncome
+	@Query("SELECT SUM(t.amount) FROM TransactionModel t WHERE t.transactionType LIKE '%PayPerView%' AND t.date LIKE CONCAT('%-',:date,'-%')")
+	int getPayPerViewIncome(@Param("date") int date);
+
+	//For TotalIncome
+	@Query("SELECT SUM(t.amount) FROM TransactionModel t WHERE t.date LIKE CONCAT('%-',:date,'-%')")
+	int getTotalIncome(@Param("date") int date);
 	
 }

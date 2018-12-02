@@ -1,5 +1,6 @@
 package com.sjsu.cmpe275.netflix.controller;
 
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -9,10 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.sjsu.cmpe275.netflix.repository.TransactionRepository;
 import com.sjsu.cmpe275.netflix.model.TransactionModel;
@@ -51,5 +49,31 @@ public class TransactionController {
 		
 		return new ResponseEntity<>(responseList, HttpStatus.NOT_FOUND);
     }
+
+
+	//	FOR Subscription_INCOME
+	@RequestMapping(value = "/totalSubscriptionIncome/{date}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<?> forSubscriptionIncome(@PathVariable("date") int date) {
+		HttpStatus status = HttpStatus.OK;
+		int totalSubscriptionIncome = transactionRepository.getSubscriptionIncome(date);
+		return new ResponseEntity(totalSubscriptionIncome, null, status);
+	}
+
+
+	//	FOR Pay_PerView_INCOME
+	@RequestMapping(value = "/payPerViewIncome/{date}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<?> forPayPerViewIncome(@PathVariable("date") int date) {
+		HttpStatus status = HttpStatus.OK;
+		int payPerViewIncome = transactionRepository.getPayPerViewIncome(date);
+		return new ResponseEntity(payPerViewIncome, null, status);
+	}
+
+	//	FOR TOTAL_INCOME
+	@RequestMapping(value = "/totalIncome/{date}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<?> forTotalIncome(@PathVariable("date") int date) {
+		HttpStatus status = HttpStatus.OK;
+		int totalIncome = transactionRepository.getTotalIncome(date);
+		return new ResponseEntity(totalIncome, null, status);
+	}
 	
 }

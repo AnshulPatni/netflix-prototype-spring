@@ -1,6 +1,8 @@
 package com.sjsu.cmpe275.netflix.repository;
 
+import java.sql.Date;
 import java.util.List;
+import java.util.Optional;
 
 import javax.transaction.Transactional;
 
@@ -16,5 +18,16 @@ public interface UserDetailsRepository extends CrudRepository<UserDetailsModel, 
 
 	@Query("SELECT u FROM UserDetailsModel u WHERE u.email = :email")
 	UserDetailsModel getUserDetails(@Param("email") String email);
-	
+
+
+	//For TotalUniqueUser
+	@Query("SELECT DISTINCT COUNT(u.email) FROM UserDetailsModel u WHERE u.date LIKE CONCAT('%-',:date,'-%')")
+	int getTotalUniqueUser(@Param("date") int date);
+
+	//For TotalUniqueActiveUser
+	@Query("SELECT DISTINCT COUNT(u.email) FROM UserActivityModel u WHERE u.date LIKE CONCAT('%-',:date,'-%')")
+	int getTotalActiveUniqueUser(@Param("date") int date);
+
+//	Optional<UserDetailsModel> findByEmail(String email);
+//	Optional<UserDetailsModel> findByEmailAndPassword(String email, String password);
 }

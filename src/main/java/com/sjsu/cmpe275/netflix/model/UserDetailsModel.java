@@ -8,6 +8,8 @@ import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 
+import java.sql.Date;
+
 @Entity
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @Table(name = "user_details")
@@ -28,6 +30,10 @@ public class UserDetailsModel {
 	
 	@Column(name="state")
 	private String state;
+
+	@Column(name="date")
+	private Date date;
+
 
 	public UserDetailsModel() {
 		

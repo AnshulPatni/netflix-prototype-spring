@@ -292,9 +292,6 @@ public class UserActivityController {
 	}
 
 
-
-
-
 //	@RequestMapping(value = "/uniqueActiveUser/{userName}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 //	public ResponseEntity<?> forUniqueActiveUser(@PathVariable("userName") String userName) {
 //		HttpStatus status = HttpStatus.OK;
@@ -309,14 +306,6 @@ public class UserActivityController {
 //		return new ResponseEntity(uniqueSubscriberList, null, status);
 //	}
 
-
-	//	FOR TOTAL_UNIQUE_USER
-	@RequestMapping(value = "/totalUniqueUser/{date}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<?> forTotalUniqueUser(@PathVariable("date") Date date) {
-		HttpStatus status = HttpStatus.OK;
-		List uniqueActiveUserList = repository.getTotalUniqueUser(date);
-		return new ResponseEntity(uniqueActiveUserList, null, status);
-	}
 	
 	@RequestMapping(value = "/userHistory/{email}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> getUserHistory(@PathVariable("email") String email) {
