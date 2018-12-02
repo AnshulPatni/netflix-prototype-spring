@@ -55,7 +55,7 @@ public interface UserActivityRepository extends CrudRepository<UserActivityModel
 	
 
 	@Modifying
-	@Query(value = "INSERT into user_activity (email, title, date, movieAvailability) VALUE (:email,:title,:date, :availability)", nativeQuery = true)
+	@Query(value = "INSERT into user_activity (email, title, date, availability) VALUE (:email,:title,:date, :availability)", nativeQuery = true)
 	@Transactional
 	void insertUserActivity(@Param("email") String email, @Param("title") String title, @Param("date") Date date, @Param("availability") String availability);
 	

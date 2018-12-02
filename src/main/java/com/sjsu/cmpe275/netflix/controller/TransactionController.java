@@ -43,10 +43,10 @@ public class TransactionController {
 				tempMap.put("email", transaction.getEmail());
 				tempMap.put("amount", Integer.toString(transaction.getAmount()));
 				tempMap.put("date", transaction.getDate().toString());
+				tempMap.put("transaction type", transaction.getTransactionType());
 				responseList.add(tempMap);
-				
-				return new ResponseEntity<>(responseList, HttpStatus.OK);
 			}
+			return new ResponseEntity<>(responseList, HttpStatus.OK);
 		}
 		
 		return new ResponseEntity<>(responseList, HttpStatus.NOT_FOUND);

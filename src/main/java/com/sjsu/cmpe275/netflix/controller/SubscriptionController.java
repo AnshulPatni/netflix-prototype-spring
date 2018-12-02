@@ -141,7 +141,7 @@ public class SubscriptionController {
 			
 			Date currDate = Date.valueOf(LocalDate.now());
 			
-			transactionRepository.insertTransaction(email, amount, currDate);
+			transactionRepository.insertTransaction(email, amount, currDate, "Subscription");
 			
 		} catch (Exception e) {
 			e.printStackTrace();

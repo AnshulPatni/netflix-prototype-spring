@@ -34,8 +34,8 @@ public class UserActivityModel
 	@Column(name="date")
 	private Date date;
 	
-	@Column(name="movie_availability")
-	private String movieAvailability;
+	@Column(name="availability")
+	private String availability;
 	
 	public UserActivityModel() {
 		
@@ -74,13 +74,13 @@ public class UserActivityModel
 	
 	
 	
-	public UserActivityModel(int userActivityId, String email, String title, Date date, String movieAvailability) {
+	public UserActivityModel(int userActivityId, String email, String title, Date date, String availability) {
 		super();
 		this.userActivityId = userActivityId;
 		this.email = email;
 		this.title = title;
 		this.date = date;
-		this.movieAvailability = movieAvailability;
+		this.availability = availability;
 	}
 
 	public int getUserActivityId() {
@@ -117,11 +117,11 @@ public class UserActivityModel
 	}
 
 	public String getMovieAvailability() {
-		return movieAvailability;
+		return availability;
 	}
 
-	public void setMovieAvailability(String movieAvailability) {
-		this.movieAvailability = movieAvailability;
+	public void setMovieAvailability(String availability) {
+		this.availability = availability;
 	}
 
 }

@@ -23,17 +23,21 @@ public class TransactionModel {
 	
 	@Column(name="date")
 	private Date date;
+	
+	@Column(name="transaction_type")
+	private String transactionType;
 
 	public TransactionModel() {
 		
 	}
 	
-	public TransactionModel(int transactionId, String email, int amount, Date date) {
+	public TransactionModel(int transactionId, String email, int amount, Date date, String transactionType) {
 		super();
 		this.transactionId = transactionId;
 		this.email = email;
 		this.amount = amount;
 		this.date = date;
+		this.transactionType = transactionType;
 	}
 
 	public int getTransactionId() {
@@ -66,6 +70,14 @@ public class TransactionModel {
 
 	public void setDate(Date date) {
 		this.date = date;
+	}
+
+	public String getTransactionType() {
+		return transactionType;
+	}
+
+	public void setTransactionType(String transactionType) {
+		this.transactionType = transactionType;
 	}
 
 }

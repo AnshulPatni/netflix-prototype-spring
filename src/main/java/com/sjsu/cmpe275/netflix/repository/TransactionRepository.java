@@ -19,8 +19,8 @@ public interface TransactionRepository extends CrudRepository<TransactionModel, 
 
 	@Modifying
 	@Transactional
-	@Query(value = "INSERT INTO transaction(email, amount, date) VALUES (:email, :amount, :date)", nativeQuery = true)
-	void insertTransaction(@Param("email") String email, @Param("amount") int amount, @Param("date") Date date);
+	@Query(value = "INSERT INTO transaction(email, amount, date, transaction_type) VALUES (:email, :amount, :date, :transactionType)", nativeQuery = true)
+	void insertTransaction(@Param("email") String email, @Param("amount") int amount, @Param("date") Date date, @Param("transactionType") String transactionType);
 	
 	@Query("SELECT m FROM TransactionModel m")
 	List<TransactionModel> getTransactions();

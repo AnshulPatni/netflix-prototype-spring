@@ -49,8 +49,20 @@ public class PayPerViewController {
 			
 			String email = map.get("email").toString();
 			String title = map.get("title").toString();
+			String existingStatus = payPerViewRepository.getPayPerViewStatus(email);
 			
-			payPerViewRepository.insertPayPerView(email, title, "subscribed");
+			if(existingStatus == null) {
+				payPerViewRepository.insertPayPerView(email, title, "subscribed");
+			} else if(existingStatus.equals("unsubscribed")){
+				payPerViewRepository.updatePayPerViewStatus(email, "subscribed");
+			} else if(existingStatus.equals("subscribed")) {
+				responseMap.put("email", email);
+				responseMap.put("title", title);
+				responseMap.put("amount", "0");
+				responseMap.put("message", "You have already subscribed as pay per view for this movie.");
+				return new ResponseEntity(responseMap, null, status);
+			}
+			
 			
 			int amount = moviesRepository.getMoviePrice(title);
 			
@@ -62,7 +74,7 @@ public class PayPerViewController {
 			
 			Date currDate = Date.valueOf(LocalDate.now());
 			
-			transactionRepository.insertTransaction(email, amount, currDate);
+			transactionRepository.insertTransaction(email, amount, currDate, "PayPerView");
 			
 			responseMap.put("email", email);
 			responseMap.put("title", title);
