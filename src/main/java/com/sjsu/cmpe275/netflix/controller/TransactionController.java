@@ -1,6 +1,8 @@
 package com.sjsu.cmpe275.netflix.controller;
 
 import java.sql.Date;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -52,27 +54,76 @@ public class TransactionController {
 
 
 	//	FOR Subscription_INCOME
-	@RequestMapping(value = "/totalSubscriptionIncome/{date}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<?> forSubscriptionIncome(@PathVariable("date") int date) {
+	@RequestMapping(value = "/totalSubscriptionIncome/{year}/{month}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<?> forSubscriptionIncome(@PathVariable("year") int year, @PathVariable("month") int month) throws ParseException {
 		HttpStatus status = HttpStatus.OK;
-		int totalSubscriptionIncome = transactionRepository.getSubscriptionIncome(date);
+		String startDateString = "" + year + "-" + month + "-01";
+		month = month + 1;
+		String endDateString = "" + year + "-" + month + "-01";
+		System.out.println(startDateString);
+		System.out.println(endDateString);
+
+		SimpleDateFormat format = new SimpleDateFormat("yyyy-mm-dd");
+		Date startDate=Date.valueOf(startDateString);
+		Date endDate=Date.valueOf(endDateString);
+//		Date startDate = format.parse("startDateString");
+//		Date endDate = format.parse("startDateString");
+//
+//		java.sql.Date sql = new java.sql.Date(parsed.getTime());
+
+		System.out.println(startDate);
+		System.out.println(endDate);
+
+		int totalSubscriptionIncome = transactionRepository.getSubscriptionIncome(startDate, endDate);
 		return new ResponseEntity(totalSubscriptionIncome, null, status);
 	}
 
 
 	//	FOR Pay_PerView_INCOME
-	@RequestMapping(value = "/payPerViewIncome/{date}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<?> forPayPerViewIncome(@PathVariable("date") int date) {
+	@RequestMapping(value = "/payPerViewIncome/{year}/{month}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<?> forPayPerViewIncome(@PathVariable("year") int year, @PathVariable("month") int month) {
 		HttpStatus status = HttpStatus.OK;
-		int payPerViewIncome = transactionRepository.getPayPerViewIncome(date);
+		String startDateString = "" + year + "-" + month + "-01";
+		month = month + 1;
+		String endDateString = "" + year + "-" + month + "-01";
+		System.out.println(startDateString);
+		System.out.println(endDateString);
+
+		SimpleDateFormat format = new SimpleDateFormat("yyyy-mm-dd");
+		Date startDate=Date.valueOf(startDateString);
+		Date endDate=Date.valueOf(endDateString);
+//		Date startDate = format.parse("startDateString");
+//		Date endDate = format.parse("startDateString");
+//
+//		java.sql.Date sql = new java.sql.Date(parsed.getTime());
+
+		System.out.println(startDate);
+		System.out.println(endDate);
+		int payPerViewIncome = transactionRepository.getPayPerViewIncome(startDate, endDate);
 		return new ResponseEntity(payPerViewIncome, null, status);
 	}
 
 	//	FOR TOTAL_INCOME
-	@RequestMapping(value = "/totalIncome/{date}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<?> forTotalIncome(@PathVariable("date") int date) {
+	@RequestMapping(value = "/totalIncome/{year}/{month}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<?> forTotalIncome(@PathVariable("year") int year, @PathVariable("month") int month) {
 		HttpStatus status = HttpStatus.OK;
-		int totalIncome = transactionRepository.getTotalIncome(date);
+		String startDateString = "" + year + "-" + month + "-01";
+		month = month + 1;
+		String endDateString = "" + year + "-" + month + "-01";
+		System.out.println(startDateString);
+		System.out.println(endDateString);
+
+		SimpleDateFormat format = new SimpleDateFormat("yyyy-mm-dd");
+		Date startDate=Date.valueOf(startDateString);
+		Date endDate=Date.valueOf(endDateString);
+//		Date startDate = format.parse("startDateString");
+//		Date endDate = format.parse("startDateString");
+//
+//		java.sql.Date sql = new java.sql.Date(parsed.getTime());
+
+		System.out.println(startDate);
+		System.out.println(endDate);
+		int totalIncome = transactionRepository.getTotalIncome(startDate, endDate);
 		return new ResponseEntity(totalIncome, null, status);
 	}
 	

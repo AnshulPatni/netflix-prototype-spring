@@ -44,18 +44,18 @@ public class UserDetailsController {
 
 
 	//	FOR UNIQUE_ACTIVE_USER
-	@RequestMapping(value = "/totalUniqueActiveUser/{date}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<?> forTotalUniqueActiveUser(@PathVariable("date") int date) {
+	@RequestMapping(value = "/totalUniqueActiveUser/{year}/{month}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<?> forTotalUniqueActiveUser(@PathVariable("year") int year, @PathVariable("month") int month) {
 		HttpStatus status = HttpStatus.OK;
-		int totalUniqueActiveUserList = userDetailsRepository.getTotalActiveUniqueUser(date);
+		int totalUniqueActiveUserList = userDetailsRepository.getTotalActiveUniqueUser(year, month);
 		return new ResponseEntity(totalUniqueActiveUserList, null, status);
 	}
 
 	//	FOR TOTAL_UNIQUE_USER
-	@RequestMapping(value = "/totalUniqueUser/{date}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<?> forTotalUniqueUser(@PathVariable("date") int date) {
+	@RequestMapping(value = "/totalUniqueUser/{year}/{month}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<?> forTotalUniqueUser(@PathVariable("year") int year, @PathVariable("month") int month) {
 		HttpStatus status = HttpStatus.OK;
-		int uniqueActiveUserList = userDetailsRepository.getTotalUniqueUser(date);
+		int uniqueActiveUserList = userDetailsRepository.getTotalUniqueUser(year, month);
 		return new ResponseEntity(uniqueActiveUserList, null, status);
 	}
 

@@ -31,4 +31,9 @@ public interface PayPerViewRepository extends CrudRepository<PayPerViewModel, In
 //    //Get unqiue payperviewuser
 //	@Query("SELECT u.email FROM UserActivityModel u WHERE u.date <= :date AND u.movieAvailabilty LIKE 'perperview%'")
 //	List getUniquePayPerViewUser(@Param("date") Date date);
+
+
+	//	//Getting number of unique pay per view users
+	@Query("SELECT DISTINCT COUNT(u.email) FROM UserActivityModel u WHERE u.date >= :startDate AND u.date <= :endDate AND u.availability LIKE '%PayPerView%'")
+	int getUniquePayPerViewUser(@Param("startDate") Date startDate ,@Param("endDate") Date endDate);
 }

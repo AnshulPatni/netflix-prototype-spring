@@ -154,10 +154,27 @@ public class SubscriptionController {
 
 
 	//API 6(a)-(i)
-	@RequestMapping(value = "/uniqueSubscription/{date}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<?> forUniqueSubscriber(@PathVariable("date") Date date) {
+	//FOR UNIQUE_SUBSCRIPTION_USER
+	@RequestMapping(value = "/uniqueSubscription/{year}/{month}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<?> forUniqueSubscriptionUser(@PathVariable("year") int year, @PathVariable("month") int month) {
 		HttpStatus status = HttpStatus.OK;
-		int uniqueSubscriberList = repository.getUniqueSubscriber(date);
+		String startDateString = "" + year + "-" + month + "-01";
+		month = month + 1;
+		String endDateString = "" + year + "-" + month + "-01";
+		System.out.println(startDateString);
+		System.out.println(endDateString);
+
+		SimpleDateFormat format = new SimpleDateFormat("yyyy-mm-dd");
+		Date startDate=Date.valueOf(startDateString);
+		Date endDate=Date.valueOf(endDateString);
+//		Date startDate = format.parse("startDateString");
+//		Date endDate = format.parse("startDateString");
+//
+//		java.sql.Date sql = new java.sql.Date(parsed.getTime());
+
+		System.out.println(startDate);
+		System.out.println(endDate);
+		int uniqueSubscriberList = repository.getUniqueSubscriptionUser(startDate, endDate);
 		return new ResponseEntity(uniqueSubscriberList, null, status);
 	}
 

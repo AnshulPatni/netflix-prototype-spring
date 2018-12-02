@@ -21,12 +21,12 @@ public interface UserDetailsRepository extends CrudRepository<UserDetailsModel, 
 
 
 	//For TotalUniqueUser
-	@Query("SELECT DISTINCT COUNT(u.email) FROM UserDetailsModel u WHERE u.date LIKE CONCAT('%-',:date,'-%')")
-	int getTotalUniqueUser(@Param("date") int date);
+	@Query("SELECT DISTINCT COUNT(u.email) FROM UserDetailsModel u WHERE u.date LIKE CONCAT(:year, '%-', :month,'-%')")
+	int getTotalUniqueUser(@Param("year") int year ,@Param("month") int month);
 
 	//For TotalUniqueActiveUser
-	@Query("SELECT DISTINCT COUNT(u.email) FROM UserActivityModel u WHERE u.date LIKE CONCAT('%-',:date,'-%')")
-	int getTotalActiveUniqueUser(@Param("date") int date);
+	@Query("SELECT DISTINCT COUNT(u.email) FROM UserActivityModel u WHERE u.date LIKE CONCAT(:year, '%-', :month,'-%')")
+	int getTotalActiveUniqueUser(@Param("year") int year ,@Param("month") int month);
 
 //	Optional<UserDetailsModel> findByEmail(String email);
 //	Optional<UserDetailsModel> findByEmailAndPassword(String email, String password);

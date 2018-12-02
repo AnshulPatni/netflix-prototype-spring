@@ -1,6 +1,7 @@
 package com.sjsu.cmpe275.netflix.controller;
 
 import java.sql.Date;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.List;
@@ -99,5 +100,31 @@ public class PayPerViewController {
 //		List uniquePayPerViewList = payPerViewRepository.getUniquePayPerViewUser(date);
 //		return new ResponseEntity(uniquePayPerViewList, null, status);
 //	}
+
+
+	//API 6(a)-(i)
+	//FOR UNIQUE_SUBSCRIPTION_USER
+	@RequestMapping(value = "/uniquePayPerViewUser/{year}/{month}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<?> forUniquePayPerViewUser(@PathVariable("year") int year, @PathVariable("month") int month) {
+		HttpStatus status = HttpStatus.OK;
+		String startDateString = "" + year + "-" + month + "-01";
+		month = month + 1;
+		String endDateString = "" + year + "-" + month + "-01";
+		System.out.println(startDateString);
+		System.out.println(endDateString);
+
+		SimpleDateFormat format = new SimpleDateFormat("yyyy-mm-dd");
+		Date startDate=Date.valueOf(startDateString);
+		Date endDate=Date.valueOf(endDateString);
+//		Date startDate = format.parse("startDateString");
+//		Date endDate = format.parse("startDateString");
+//
+//		java.sql.Date sql = new java.sql.Date(parsed.getTime());
+
+		System.out.println(startDate);
+		System.out.println(endDate);
+		int uniquePayPerViewUser = payPerViewRepository.getUniquePayPerViewUser(startDate, endDate);
+		return new ResponseEntity(uniquePayPerViewUser, null, status);
+	}
 
 }
