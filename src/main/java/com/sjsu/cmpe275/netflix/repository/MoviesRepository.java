@@ -29,6 +29,9 @@ public interface MoviesRepository extends CrudRepository<MoviesModel, Integer> {
 	@Query("SELECT m.price FROM MoviesModel m WHERE m.title = :title")
 	int getMoviePrice(@Param("title") String title);
 	
+	@Query("SELECT m.availability FROM MoviesModel m WHERE m.title = :title")
+	String getMovieType(@Param("title") String title);
+	
 	@Query("SELECT m.avgStars FROM MoviesModel m WHERE m.title = :title")
 	float getAvgStars(@Param("title") String title);
 	

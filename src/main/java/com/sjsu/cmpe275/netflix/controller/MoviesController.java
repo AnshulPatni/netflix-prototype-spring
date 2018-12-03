@@ -1,5 +1,6 @@
 package com.sjsu.cmpe275.netflix.controller;
 
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -22,6 +23,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.sjsu.cmpe275.netflix.repository.MoviesRepository;
+import com.sjsu.cmpe275.netflix.repository.SubscriptionRepository;
+import com.sjsu.cmpe275.netflix.repository.PayPerViewRepository;
 import com.sjsu.cmpe275.netflix.model.MoviesModel;
 
 @RestController
@@ -34,6 +37,12 @@ public class MoviesController {
 
 	@Autowired
 	MoviesRepository repository;
+	
+	@Autowired
+	SubscriptionRepository subscriptionRepository;
+	
+	@Autowired
+	PayPerViewRepository payPerViewRepository;
 
 	@RequestMapping(value = "/search/{keyword}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<?> searchMoviesByKeyword(@PathVariable("keyword") String keyword) {
@@ -63,7 +72,53 @@ public class MoviesController {
 
 		return new ResponseEntity(responseList, null, status);
     }
+	
+	
+	@RequestMapping(value = "/findPrice/{title}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<?> findPrice(@PathVariable("title") String title) {
+		HttpStatus status = HttpStatus.OK;
+		HttpSession session = null;
+//		String email = (String) session.getAttribute("email");
+		String email = "abcdef@gmail.com";
+		
+		Map<String, String> responseMap = new HashMap<>();
+		
+		try {
+			responseMap.put("title", title);
+			
+			int amount = repository.getMoviePrice(title);
+			String movieType = repository.getMovieType(title);
 
+			Date subscriptionEndDate = subscriptionRepository.getSubscriptionEndDate(email);
+			String payPerViewStatus = payPerViewRepository.getPayPerViewStatus(email);
+			
+			if(movieType.equals("PayPerView")) {
+				if(payPerViewStatus != null && payPerViewStatus.equals("subscribed")) {
+					amount = 0;
+				} else if(subscriptionEndDate != null && subscriptionEndDate.after(Date.valueOf(java.time.LocalDate.now()))) {
+				amount = amount / 2;
+				}
+			} else if(movieType.equals("SubscriptionOnly")) {
+				amount = 10;
+			} else if(movieType.equals("Free")) {
+				amount = 0;
+			} else if(movieType.equals("Paid")) {
+				if(subscriptionEndDate != null && subscriptionEndDate.after(Date.valueOf(java.time.LocalDate.now()))) {
+					amount = 0;
+				} else if(payPerViewStatus != null && payPerViewStatus.equals("subscribed")) {
+					amount = 0;
+				}
+			}
+			
+			responseMap.put("amount",String.valueOf(amount));
+									
+			return new ResponseEntity(responseMap, null, status);
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return new ResponseEntity(responseMap, null, status);
+    }
 
 	
 	@RequestMapping(value = "/getAllMovies", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
@@ -149,14 +204,6 @@ public class MoviesController {
 
 	}
 
-	
-	
-	
-	
-	
-	
-	
-	
 	@RequestMapping(value = "/editMovie", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> editMovieByAdmin(@RequestBody Map map, HttpSession session)
 	{
