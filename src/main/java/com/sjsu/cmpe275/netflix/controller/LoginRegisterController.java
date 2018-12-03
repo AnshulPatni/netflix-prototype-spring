@@ -56,7 +56,8 @@ public class LoginRegisterController {
             String activationCode = String.valueOf(new Random(System.nanoTime()).nextInt(100000));
             UserDetailsModel user = new UserDetailsModel(email, name, contact_no, city, date, encodedPassword, Boolean.FALSE, activationCode);
             userDetailsRepository.save(user);
-            String text = "Your verification code is " + activationCode + "\n";
+            String url = "http://localhost:8080/user/activate/" + email + "/" + activationCode;
+            String text = "Your verification code is " + activationCode + "\n Or Click on the below link to activate your account. \n" + url;
             emailService.sendInvitationForUser(email, "Verification email for Movie Central", text);
 
             return new ResponseEntity<>(user, HttpStatus.OK);
@@ -87,14 +88,10 @@ public class LoginRegisterController {
     }
 
 
-
-
-
     @GetMapping(value = "/login/{email}/{password}", produces = "application/json")
     public ResponseEntity<?> userLogin(@PathVariable("email") String email, @PathVariable("password") String password, HttpSession session) {
         Optional<UserDetailsModel> userOptional = userDetailsRepository.findByEmail(email);
 
-        //session.setAttribute("email", email);
         if (userOptional.isPresent()) {
             UserDetailsModel user = userOptional.get();
             logger.info("String password {} ----- {}", new String(Base64.getDecoder().decode(user.getPassword().getBytes())), password);
@@ -125,30 +122,6 @@ public class LoginRegisterController {
         //session.getParameter("userEmail")
         return new ResponseEntity<>(HttpStatus.OK);
     }
-
-
-
-
-
-
-//    @GetMapping(value = "/activate/{email}/{activationCode}", produces = "application/json")
-//    private ResponseEntity<?> activateUser(@PathVariable("email") String email, @PathVariable("activationCode") String activationCode) {
-//        String decodedEmail = new String(Base64.getDecoder().decode(email.getBytes()));
-//        Optional<UserDetailsModel> userOptional = userDetailsRepository.findByEmail(email);
-//        if (userOptional.isPresent()) {
-//            UserDetailsModel user = userOptional.get();
-//            if (user.getVerificationCode().equals(activationCode)) {
-//                logger.info("Activation code", activationCode);
-//                user.setActivated(true);
-//                userDetailsRepository.save(user);
-//                return new ResponseEntity<>(user, HttpStatus.OK);
-//            } else {
-//                return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-//            }
-//        } else {
-//            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-//        }
-//    }
 
 
 }

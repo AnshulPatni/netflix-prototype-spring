@@ -29,11 +29,19 @@ public class UserDetailsModel {
 	@Column(name="city")
 	private String city;
 
-
-
-
 	@Column(name="date")
 	private Date date;
+	
+	@Column(name="password")
+	private String password;
+
+	@Column(name="is_activated")
+	@JsonIgnore
+	private boolean isActivated;
+
+	@Column(name="verification_code")
+	@JsonIgnore
+	private String verificationCode;
 
 	public UserDetailsModel(String email, String name, String contactNo, String city, Date date, String password, boolean isActivated, String verificationCode) {
 		this.email = email;
@@ -45,17 +53,6 @@ public class UserDetailsModel {
 		this.isActivated = isActivated;
 		this.verificationCode = verificationCode;
 	}
-
-	@Column(name="password")
-	private String password;
-
-	@Column(name="is_activated")
-	@JsonIgnore
-	private boolean isActivated;
-
-	@Column(name="verification_code")
-	@JsonIgnore
-	private String verificationCode;
 
 
 	public UserDetailsModel() {
