@@ -43,7 +43,7 @@ public interface SubscriptionRepository extends CrudRepository<SubscriptionModel
 
 
 //	//Getting number of unique subscription users
-	@Query("SELECT COUNT(s.email) FROM SubscriptionModel s WHERE s.subscriptionEndDate >= :startDate AND s.subscriptionEndDate <= :endDate")
+	@Query("SELECT COUNT(s.email) FROM SubscriptionModel s WHERE s.subscriptionEndDate >= :startDate AND s.subscriptionEndDate < :endDate AND s.subscriptionStartDate >= :endDate AND s.subscriptionStartDate > :startDate")
 	int getUniqueSubscriptionUser(@Param("startDate") Date startDate ,@Param("endDate") Date endDate);
 
 

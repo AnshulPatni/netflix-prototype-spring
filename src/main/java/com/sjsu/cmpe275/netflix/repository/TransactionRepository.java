@@ -27,16 +27,16 @@ public interface TransactionRepository extends CrudRepository<TransactionModel, 
 
 
 	//For ForSubscriptionIncome
-	@Query("SELECT SUM(t.amount) FROM TransactionModel t WHERE t.transactionType LIKE '%Subscription%' AND t.date >= :startDate AND t.date <= :endDate")
+	@Query("SELECT COALESCE(SUM(t.amount), 0) FROM TransactionModel t WHERE t.transactionType LIKE '%Subscription%' AND t.date >= :startDate AND t.date < :endDate")
 	int getSubscriptionIncome(@Param("startDate") Date startDate ,@Param("endDate") Date endDate);
 
 
 	//For PayPerViewIncome
-	@Query("SELECT SUM(t.amount) FROM TransactionModel t WHERE t.transactionType LIKE '%PayPerView%' AND t.date >= :startDate AND t.date <= :endDate")
+	@Query("SELECT COALESCE(SUM(t.amount), 0) FROM TransactionModel t WHERE t.transactionType LIKE '%PayPerView%' AND t.date >= :startDate AND t.date < :endDate")
 	int getPayPerViewIncome(@Param("startDate") Date startDate ,@Param("endDate") Date endDate);
 
 	//For TotalIncome
-	@Query("SELECT SUM(t.amount) FROM TransactionModel t WHERE t.date >= :startDate AND t.date <= :endDate")
+	@Query("SELECT COALESCE(SUM(t.amount), 0) FROM TransactionModel t WHERE t.date >= :startDate AND t.date < :endDate")
 	int getTotalIncome(@Param("startDate") Date startDate ,@Param("endDate") Date endDate);
 	
 }
