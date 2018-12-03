@@ -1,5 +1,6 @@
 package com.sjsu.cmpe275.netflix.controller;
 
+import com.sjsu.cmpe275.netflix.model.BadRequest;
 import com.sjsu.cmpe275.netflix.model.UserDetailsModel;
 import com.sjsu.cmpe275.netflix.repository.MovieReviewsRepository;
 import com.sjsu.cmpe275.netflix.repository.UserDetailsRepository;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.support.*;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.context.request.WebRequest;
+import org.springframework.web.bind.support.SessionAttributeStore;
 
 import javax.servlet.http.HttpSession;
 import java.io.UnsupportedEncodingException;
@@ -36,7 +38,7 @@ public class LoginRegisterController {
     com.sjsu.cmpe275.netflix.service.EmailService emailService;
     private Logger logger = LoggerFactory.getLogger(this.getClass());
 
-
+    private SessionAttributeStore sessionAttributeStore = new DefaultSessionAttributeStore();
 
 
     @PostMapping(value = "/register", produces = "application/json")
@@ -88,8 +90,8 @@ public class LoginRegisterController {
     }
 
 
-    @GetMapping(value = "/login/{email}/{password}", produces = "application/json")
-    public ResponseEntity<?> userLogin(@PathVariable("email") String email, @PathVariable("password") String password, HttpSession session) {
+    @GetMapping(value = "/login", produces = "application/json")
+    public ResponseEntity<?> userLogin(@RequestParam("email") String email, @RequestParam("password") String password, HttpSession session) {
         Optional<UserDetailsModel> userOptional = userDetailsRepository.findByEmail(email);
 
         if (userOptional.isPresent()) {
@@ -97,8 +99,7 @@ public class LoginRegisterController {
             logger.info("String password {} ----- {}", new String(Base64.getDecoder().decode(user.getPassword().getBytes())), password);
             if (password.equalsIgnoreCase(new String(Base64.getDecoder().decode(user.getPassword().getBytes())))) {
                 if (user.isActivated()) {
-                    //session.setAttribute("userEmail", user.getEmail());
-//                    System.out.printf(session.getParameter("userEmail"));
+                    session.setAttribute("userEmail", user.getEmail());
                     return new ResponseEntity<>(user, HttpStatus.OK);
                 } else {
                     return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
@@ -113,14 +114,13 @@ public class LoginRegisterController {
     }
 
 
-    @GetMapping(value = "/logout", produces = "application/json")
-//    WebRequest request, SessionAttributeStore store, SessionStatus status, HttpSession session
-    public ResponseEntity<?> userLogout() {
-        //store.cleanupAttribute(request,"username");
-//        System.out.println(request.getParameter("email"));
-        HttpSession session;
-        //session.getParameter("userEmail")
-        return new ResponseEntity<>(HttpStatus.OK);
+    @SuppressWarnings("deprecation")
+	@GetMapping(value = "/logout", produces = "application/json")
+    public ResponseEntity<?> userLogout(WebRequest request, SessionStatus status,HttpSession session) {
+        session.removeValue("userEmail");
+        //session.getParameter("userEmail");
+        return new ResponseEntity<>(new BadRequest(200,"You have have been logged out successfully"),HttpStatus.OK);
+
     }
 
 
