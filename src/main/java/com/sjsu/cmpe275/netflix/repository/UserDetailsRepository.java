@@ -28,6 +28,11 @@ public interface UserDetailsRepository extends CrudRepository<UserDetailsModel, 
 	@Query("SELECT COUNT(DISTINCT u.email) FROM UserActivityModel u WHERE u.date >= :startDate AND u.date < :endDate")
 	int getTotalActiveUniqueUser(@Param("startDate") Date startDate ,@Param("endDate") Date endDate);
 
+//	//For Login
+//	@Query("SELECT DISTINCT u.email FROM UserActivityModel u WHERE u.date >= :startDate AND u.date < :endDate")
 //	Optional<UserDetailsModel> findByEmail(String email);
-//	Optional<UserDetailsModel> findByEmailAndPassword(String email, String password);
+////	Optional<UserDetailsModel> findByEmailAndPassword(String email, String password);
+
+	Optional<UserDetailsModel> findByEmail(String email);
+	Optional<UserDetailsModel> findByEmailAndPassword(String email, String password);
 }

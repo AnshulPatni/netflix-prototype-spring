@@ -21,6 +21,8 @@ import com.sjsu.cmpe275.netflix.repository.UserActivityRepository;
 import com.sjsu.cmpe275.netflix.repository.SubscriptionRepository;
 import com.sjsu.cmpe275.netflix.repository.PayPerViewRepository;
 
+import javax.servlet.http.HttpSession;
+
 @RestController
 @CrossOrigin(origins = "*", allowCredentials = "true")
 @RequestMapping(value = "/movies/play")
@@ -44,6 +46,7 @@ public class PlayController {
 		Map<String, String> responseMap = new HashMap<>();
 //		String email = "ab@gmail.com";
 		String availability = moviesRepository.getMovieAvailabilityByTitle(title);
+
 		if(availability.equals("Free")) {
 			
 			// update user_activity

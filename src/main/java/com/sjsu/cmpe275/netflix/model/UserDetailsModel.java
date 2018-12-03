@@ -6,6 +6,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 
 import java.sql.Date;
@@ -27,25 +28,50 @@ public class UserDetailsModel {
 	
 	@Column(name="city")
 	private String city;
-	
-	@Column(name="state")
-	private String state;
+
+
+
 
 	@Column(name="date")
 	private Date date;
+
+	public UserDetailsModel(String email, String name, String contactNo, String city, Date date, String password, boolean isActivated, String verificationCode) {
+		this.email = email;
+		this.name = name;
+		this.contactNo = contactNo;
+		this.city = city;
+		this.date = date;
+		this.password = password;
+		this.isActivated = isActivated;
+		this.verificationCode = verificationCode;
+	}
+
+	@Column(name="password")
+	private String password;
+
+	@Column(name="is_activated")
+	@JsonIgnore
+	private boolean isActivated;
+
+	@Column(name="verification_code")
+	@JsonIgnore
+	private String verificationCode;
 
 
 	public UserDetailsModel() {
 		
 	}
 	
-	public UserDetailsModel(String email, String name, String contactNo, String city, String state) {
+	public UserDetailsModel(String email, String name, String contactNo, String city, Date date, String password, Boolean isActivated, String verificationCode ) {
 		super();
 		this.email = email;
 		this.name = name;
 		this.contactNo = contactNo;
 		this.city = city;
-		this.state = state;
+		this.date = date;
+		this.password = password;
+		this.isActivated = isActivated;
+		this.verificationCode = verificationCode;
 	}
 
 	public String getEmail() {
@@ -68,6 +94,10 @@ public class UserDetailsModel {
 		return contactNo;
 	}
 
+	public String getPassword() {
+		return password;
+	}
+
 	public void setContactNo(String contactNo) {
 		this.contactNo = contactNo;
 	}
@@ -80,12 +110,21 @@ public class UserDetailsModel {
 		this.city = city;
 	}
 
-	public String getState() {
-		return state;
+
+
+
+	public boolean isActivated() {
+		return isActivated;
 	}
 
-	public void setState(String state) {
-		this.state = state;
+	public void setActivated(boolean activated) {
+		isActivated = activated;
 	}
-	
+
+
+	public String getVerificationCode() {
+		return verificationCode;
+	}
+
+
 }

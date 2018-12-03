@@ -37,7 +37,7 @@ public class UserDetailsController {
 		responseMap.put("name", userDetails.getName());
 		responseMap.put("contactNo", userDetails.getContactNo());
 		responseMap.put("city", userDetails.getCity());
-		responseMap.put("state", userDetails.getState());
+
 
         return new ResponseEntity<>(responseMap, null, HttpStatus.OK);
         
