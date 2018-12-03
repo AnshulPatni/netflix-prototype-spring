@@ -48,7 +48,7 @@ public class PayPerViewController {
 		
 		try {
 			
-			String email = map.get("email").toString();
+			String email = (String) session.getAttribute("userEmail");
 			String title = map.get("title").toString();
 			String existingStatus = payPerViewRepository.getPayPerViewStatus(email);
 			

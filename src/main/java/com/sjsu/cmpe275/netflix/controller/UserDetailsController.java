@@ -104,18 +104,6 @@ public class UserDetailsController {
 		return new ResponseEntity(uniqueActiveUserList, null, status);
 	}
 
-
-
-
-
-
-
-
-
-
-
-
-
 //	//REGISTER
 //	@PostMapping(value = "/register", produces = "application/json")
 //	private ResponseEntity<?> registerUser(@RequestParam(value = "username") String username,

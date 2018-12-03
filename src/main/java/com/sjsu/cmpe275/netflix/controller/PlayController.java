@@ -40,10 +40,11 @@ public class PlayController {
 	@Autowired
 	PayPerViewRepository payPerViewRepository;
 
-	@RequestMapping(value = "/{email}/{title}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> playMovie(@PathVariable("email") String email, @PathVariable("title") String title) {
+	@RequestMapping(value = "/{title}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> playMovie(@PathVariable("title") String title, HttpSession session) {
 		HttpStatus status = HttpStatus.OK;
 		Map<String, String> responseMap = new HashMap<>();
+		String email = (String) session.getAttribute("userEmail");
         String sjsuEdu = "@sjsu.edu";
         
         if(email.contains(sjsuEdu)) {

@@ -35,8 +35,9 @@ public class SubscriptionController {
 	@Autowired
 	TransactionRepository transactionRepository;
 
-	@RequestMapping(value = "/getSubscriptionDetails/{email}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> getSubscriptionDetails(@PathVariable("email") String email) {
+	@RequestMapping(value = "/getSubscriptionDetails", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> getSubscriptionDetails(HttpSession session) {
+		String email = (String) session.getAttribute("userEmail");
         return getSubscription(email);
     }
 	
@@ -52,10 +53,11 @@ public class SubscriptionController {
     }
 	
 	@SuppressWarnings("unchecked")
-	@RequestMapping(value = "/checkSubscriptionStatus/{email}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> checkSubscriptionStatus(@PathVariable("email") String email) {
+	@RequestMapping(value = "/checkSubscriptionStatus", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> checkSubscriptionStatus(HttpSession session) {
 		HttpStatus status = HttpStatus.OK;
 		Map<String, String> responseMap = new HashMap<>();
+		String email = (String) session.getAttribute("userEmail");
 		
 		responseMap.put("email", email);
 		
@@ -94,7 +96,7 @@ public class SubscriptionController {
 
 		int month = (int) map.get("month");
 		Map<String, String> responseMap = new HashMap<>();
-		String email = map.get("email").toString();
+		String email = (String) session.getAttribute("userEmail");
 		int days = month * 30;
 		int amount = month * 10;
 		
