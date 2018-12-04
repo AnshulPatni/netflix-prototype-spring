@@ -70,7 +70,7 @@ public class LoginRegisterController {
 
 
     @GetMapping(value = "/activate/{email}/{code}", produces = "application/json")
-    private ResponseEntity<?> activateUser(@PathVariable("email") String email,@PathVariable("code")  String activationCode) throws UnsupportedEncodingException {
+    private ResponseEntity<?> activateUser(@PathVariable("email") String email,@PathVariable("code")  String activationCode, HttpSession session) throws UnsupportedEncodingException {
         //String decodedEmail = new String(Base64.getDecoder().decode(email.getBytes(StandardCharsets.UTF_8)));
         //System.out.println(decodedEmail);
         Optional<UserDetailsModel> userOptional = userDetailsRepository.findByEmail(email);
@@ -80,6 +80,7 @@ public class LoginRegisterController {
                 logger.info("Activation code", activationCode);
                 user.setActivated(true);
                 userDetailsRepository.save(user);
+                session.setAttribute("userEmail", user.getEmail());
                 return new ResponseEntity<>(user, HttpStatus.OK);
             } else {
                 return new ResponseEntity<>(new BadHttpRequest(), HttpStatus.BAD_REQUEST);

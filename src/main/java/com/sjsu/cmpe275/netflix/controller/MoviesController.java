@@ -75,11 +75,10 @@ public class MoviesController {
 	
 	
 	@RequestMapping(value = "/findPrice/{title}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<?> findPrice(@PathVariable("title") String title) {
+	public ResponseEntity<?> findPrice(@PathVariable("title") String title, HttpSession session) {
 		HttpStatus status = HttpStatus.OK;
-		HttpSession session = null;
-//		String email = (String) session.getAttribute("email");
-		String email = "abcdef@gmail.com";
+		
+		String email = (String) session.getAttribute("userEmail");
 		
 		Map<String, String> responseMap = new HashMap<>();
 		
@@ -87,9 +86,11 @@ public class MoviesController {
 			responseMap.put("title", title);
 			
 			int amount = repository.getMoviePrice(title);
+			
 			String movieType = repository.getMovieType(title);
 
 			Date subscriptionEndDate = subscriptionRepository.getSubscriptionEndDate(email);
+			
 			String payPerViewStatus = payPerViewRepository.getPayPerViewStatus(email);
 			
 			if(movieType.equals("PayPerView")) {
@@ -99,7 +100,11 @@ public class MoviesController {
 				amount = amount / 2;
 				}
 			} else if(movieType.equals("SubscriptionOnly")) {
+				if(subscriptionEndDate != null && subscriptionEndDate.after(Date.valueOf(java.time.LocalDate.now()))) {
+					amount = 0;
+				} else {
 				amount = 10;
+				}
 			} else if(movieType.equals("Free")) {
 				amount = 0;
 			} else if(movieType.equals("Paid")) {
