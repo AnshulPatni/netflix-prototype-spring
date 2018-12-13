@@ -100,7 +100,7 @@ public class MovieReviewsController {
 	            
 	            Map<String, Object> json = new HashMap<String, Object>();
 		        json.put("status_code", 200);
-		        json.put(" Movies in Reverse chronological order for this user: ", questionOptional);
+		        json.put("moviename", questionOptional);
 		        String data="";
 		        try 
 		           {
