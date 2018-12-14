@@ -119,6 +119,7 @@ public class SearchFilterController {
             eachMovieMap.put("rating", eachMovie.getRating());
             eachMovieMap.put("availability", eachMovie.getAvailability());
             eachMovieMap.put("price", String.valueOf(eachMovie.getPrice()));
+            eachMovieMap.put("avgStars", String.valueOf(eachMovie.getAvgStars()));
             responseList2.add(eachMovieMap);
         }
 
