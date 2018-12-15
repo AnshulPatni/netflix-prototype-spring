@@ -54,7 +54,7 @@ public class LoginRegisterController {
             String activationCode = String.valueOf(new Random(System.nanoTime()).nextInt(100000));
             UserDetailsModel user = new UserDetailsModel(email, name, contact_no, city, date, encodedPassword, Boolean.FALSE, activationCode);
             userDetailsRepository.save(user);
-            String url = "http://localhost:8080/user/activate/" + email + "/" + activationCode;
+            String url = "http://ec2-52-53-167-184.us-west-1.compute.amazonaws.com:8080/user/activate/" + email + "/" + activationCode;
             String text = "Your verification code is " + activationCode + "\n Or Click on the below link to activate your account. \n" + url;
             emailService.sendInvitationForUser(email, "Verification email for Movie Central", text);
             

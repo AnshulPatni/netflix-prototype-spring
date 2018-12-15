@@ -70,6 +70,7 @@ public class MoviesController {
 			eachMovieMap.put("availability", eachMovie.getAvailability());
 			eachMovieMap.put("price", String.valueOf(eachMovie.getPrice()));
 			eachMovieMap.put("movieUrl", eachMovie.getMovieUrl());
+			eachMovieMap.put("avgStars", String.valueOf(eachMovie.getAvgStars()));
 			responseList.add(eachMovieMap);
 			
 		}
