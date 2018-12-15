@@ -33,14 +33,17 @@ public class UserDetailsController {
 		
 		UserDetailsModel userDetails = userDetailsRepository.getUserDetails(email);
 		
-		responseMap.put("email", userDetails.getEmail());
-		responseMap.put("name", userDetails.getName());
-		responseMap.put("contactNo", userDetails.getContactNo());
-		responseMap.put("city", userDetails.getCity());
+		if(userDetails != null) {
+			responseMap.put("email", userDetails.getEmail());
+			responseMap.put("name", userDetails.getName());
+			responseMap.put("contactNo", userDetails.getContactNo());
+			responseMap.put("city", userDetails.getCity());
 
-
-        return new ResponseEntity<>(responseMap, null, HttpStatus.OK);
-        
+	        return new ResponseEntity<>(responseMap, null, HttpStatus.OK);
+		} else {
+			responseMap.put("message", "No such user exists.");
+			return new ResponseEntity<>(responseMap, null, HttpStatus.NOT_FOUND);
+		}
     }
 
 

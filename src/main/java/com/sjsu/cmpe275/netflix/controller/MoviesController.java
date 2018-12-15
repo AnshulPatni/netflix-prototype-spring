@@ -245,18 +245,18 @@ public class MoviesController {
 }
 	private ResponseEntity<?> addMovie(String title,String genre,int year,String studio,String synopsis,String image_url,String actors,String director,String country, String rating,String availability,int price, String movie_url)
 	{
-		ResponseEntity responseEntity = new ResponseEntity(null, HttpStatus.NOT_FOUND);
+		Map<String, String> responseMap = new HashMap<>();
 		String data = "";
-	try
-	{
-		    repository.addMovieAdmin(title, genre, year, studio, synopsis, image_url, actors, director, country, rating, availability, price, movie_url); 
-            HttpHeaders httpHeaders = new HttpHeaders();			
-            return new ResponseEntity<>(responseEntity, httpHeaders, HttpStatus.OK);      
-	}
-	catch(Exception e)
-	
-	{e.printStackTrace();}
-	return responseEntity;
+		try	{
+			    repository.addMovieAdmin(title, genre, year, studio, synopsis, image_url, actors, director, country, rating, availability, price, movie_url);
+			    responseMap.put("message", "The movie has been added successfully!");
+	            return new ResponseEntity<>(responseMap, null, HttpStatus.OK);      
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		responseMap.put("message", "The movie could not be added.");
+		return new ResponseEntity<>(responseMap, null, HttpStatus.NOT_FOUND);
 
 	}
 
@@ -323,7 +323,6 @@ public class MoviesController {
 	return responseEntity;
 
 	}
-	
 	
 	
 }
