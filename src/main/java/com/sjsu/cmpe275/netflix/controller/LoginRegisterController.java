@@ -20,6 +20,7 @@ import org.springframework.web.bind.support.SessionAttributeStore;
 import javax.servlet.http.HttpSession;
 import java.io.UnsupportedEncodingException;
 import java.sql.Date;
+import java.time.LocalDate;
 import java.util.Base64;
 import java.util.Map;
 import java.util.Optional;
@@ -123,6 +124,36 @@ public class LoginRegisterController {
         return new ResponseEntity<>(new BadRequest(200,"You have have been logged out successfully"),HttpStatus.OK);
 
     }
+    
+    //Creating API for fb login
+    @PostMapping(value = "/loginsocial", produces = "application/json")
+    private ResponseEntity<?> loginSocialData(@RequestBody Map map, HttpSession session) throws UnsupportedEncodingException {
+        String email = (String) map.get("email");
+        String name = (String) map.get("name");
+        String contact_no = "6691234567";
+        String city = "San Jose";
+        String password = "1234";
+        Date date = Date.valueOf(LocalDate.now());
+        System.out.println(date);
 
 
+//        Optional<UserDetailsModel> userOptional = userDetailsRepository.findByEmail(email);
+//        if (!userOptional.isPresent()) {
+            String encodedPassword = Base64.getEncoder().encodeToString(password.getBytes());
+            String activationCode = String.valueOf(new Random(System.nanoTime()).nextInt(100000));
+            UserDetailsModel user = new UserDetailsModel(email, name, contact_no, city, date, encodedPassword, Boolean.TRUE, activationCode);
+            userDetailsRepository.save(user);
+            session.setAttribute("userEmail", user.getEmail());
+
+//            String url = "http://localhost:8080/user/activate/" + email + "/" + activationCode;
+//            String text = "Your verification code is " + activationCode + "\n Or Click on the below link to activate your account. \n" + url;
+//            emailService.sendInvitationForUser(email, "Verification email for Movie Central", text);
+
+            return new ResponseEntity<>(user, HttpStatus.OK);
+//        } else {
+//            return new ResponseEntity<>(new BadHttpRequest(), HttpStatus.BAD_REQUEST);
+//        }
+
+
+    }
 }
