@@ -66,24 +66,6 @@ public class MoviesModel {
 	public MoviesModel() {
 		
 	}
-
-	//        genre, year, actors, directors, MPAA rating, and number of stars
-
-//	public MoviesModel(String genre, int year, String actors, String director, String rating, Float avgStars)
-//	public MoviesModel(Map<String, String> parameters) {
-//		super();
-//		System.out.println("inside movie model constructor");
-//		System.out.println(parameters.get(year));
-////		System.out.println(parameters.get(year).getClass().getName());
-////		System.out.println(parameters.get(year).getClass());
-//		System.out.println(parameters.get(genre));
-//		this.genre = parameters.get(genre);
-//		this.year = Integer.parseInt(parameters.get(year));
-//		this.actors = parameters.get(actors);
-//		this.director = parameters.get(director);
-//		this.rating = parameters.get(rating);
-//		this.avgStars = Float.valueOf(parameters.get(avgStars));
-//	}
 	
 	public MoviesModel(String title, String genre, int year, String studio, String synopsis, String imageUrl,
 			String actors, String director, String country, String rating, String availability, int price,
@@ -219,15 +201,3 @@ public class MoviesModel {
 	}
 	
 }
-/*@NamedStoredProcedureQueries({
-		@NamedStoredProcedureQuery(name = "filter_procedure1",
-				procedureName = "filter_procedure1",
-				parameters = {
-						@StoredProcedureParameter(mode = ParameterMode.IN, name = "genre", type = String.class),
-						@StoredProcedureParameter(mode = ParameterMode.IN, name = "year", type = Integer.class),
-						@StoredProcedureParameter(mode = ParameterMode.IN, name = "actors", type = String.class),
-						@StoredProcedureParameter(mode = ParameterMode.IN, name = "director", type = String.class),
-						@StoredProcedureParameter(mode = ParameterMode.IN, name = "rating", type = String.class),
-						@StoredProcedureParameter(mode = ParameterMode.IN, name = "avgStars", type = Float.class)
-				}),
-})*/

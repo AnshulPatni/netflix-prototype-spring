@@ -37,21 +37,6 @@ public class UserActivityModel
 		
 	}
 
-	//@Transient
-	//private List<User> getToptenMovies;
-
-
-	//private int status;
-	//@Transient
-	//private int noOfPlay;
-	//@Transient
-    //private List<User> getToptenUser;
-	//public int getNoOfPlay() {
-	//	return noOfPlay;
-	//}
-
-
-
 	public UserActivityModel(int userActivityId, String email, String title, Date date) {
 		super();
 		this.userActivityId = userActivityId;
