@@ -40,12 +40,8 @@ public interface SubscriptionRepository extends CrudRepository<SubscriptionModel
     @Transactional
     void insertSubscriptionDetails(@Param("email") String email, @Param("subscriptionStartDate") Date subscriptionStartDate, @Param("subscriptionEndDate") Date subscriptionEndDate);
 
-
-
-//	//Getting number of unique subscription users
 	@Query("SELECT COUNT(DISTINCT s.email) FROM SubscriptionModel s WHERE s.subscriptionStartDate >= :startDate AND s.subscriptionStartDate < :endDate OR s.subscriptionStartDate <= :startDate AND s.subscriptionEndDate >= :startDate OR s.subscriptionEndDate >= :startDate AND s.subscriptionEndDate < :endDate")
 	int getUniqueSubscriptionUser(@Param("startDate") Date startDate ,@Param("endDate") Date endDate);
-
 
 }
 

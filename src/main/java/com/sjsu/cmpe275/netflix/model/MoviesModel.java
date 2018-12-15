@@ -1,7 +1,6 @@
 package com.sjsu.cmpe275.netflix.model;
 
 import javax.persistence.*;
-import java.util.Map;
 
 @Entity
 @Table(name="movies")

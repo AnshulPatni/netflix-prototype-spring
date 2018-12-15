@@ -72,10 +72,6 @@ public class TransactionController {
 		SimpleDateFormat format = new SimpleDateFormat("yyyy-mm-dd");
 		Date startDate=Date.valueOf(startDateString);
 		Date endDate=Date.valueOf(endDateString);
-//		Date startDate = format.parse("startDateString");
-//		Date endDate = format.parse("startDateString");
-//
-//		java.sql.Date sql = new java.sql.Date(parsed.getTime());
 
 		System.out.println(startDate);
 		System.out.println(endDate);
@@ -104,10 +100,6 @@ public class TransactionController {
 		SimpleDateFormat format = new SimpleDateFormat("yyyy-mm-dd");
 		Date startDate=Date.valueOf(startDateString);
 		Date endDate=Date.valueOf(endDateString);
-//		Date startDate = format.parse("startDateString");
-//		Date endDate = format.parse("startDateString");
-//
-//		java.sql.Date sql = new java.sql.Date(parsed.getTime());
 
 		System.out.println(startDate);
 		System.out.println(endDate);
@@ -134,10 +126,6 @@ public class TransactionController {
 		SimpleDateFormat format = new SimpleDateFormat("yyyy-mm-dd");
 		Date startDate=Date.valueOf(startDateString);
 		Date endDate=Date.valueOf(endDateString);
-//		Date startDate = format.parse("startDateString");
-//		Date endDate = format.parse("startDateString");
-//
-//		java.sql.Date sql = new java.sql.Date(parsed.getTime());
 
 		System.out.println(startDate);
 		System.out.println(endDate);

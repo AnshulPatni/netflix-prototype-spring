@@ -28,12 +28,7 @@ public interface PayPerViewRepository extends CrudRepository<PayPerViewModel, In
 	@Transactional
 	void insertPayPerView(@Param("email") String email, @Param("title") String title, @Param("status") String status);
 
-//    //Get unqiue payperviewuser
-//	@Query("SELECT u.email FROM UserActivityModel u WHERE u.date <= :date AND u.movieAvailabilty LIKE 'perperview%'")
-//	List getUniquePayPerViewUser(@Param("date") Date date);
-
-
-	//	//Getting number of unique pay per view users
+	// Getting number of unique pay per view users
 	@Query("SELECT COUNT(DISTINCT u.email) FROM UserActivityModel u WHERE u.date >= :startDate AND u.date < :endDate AND u.availability LIKE '%PayPerView%'")
 	int getUniquePayPerViewUser(@Param("startDate") Date startDate ,@Param("endDate") Date endDate);
 }

@@ -1,7 +1,7 @@
 package com.sjsu.cmpe275.netflix.controller;
 
 import java.sql.Date;
-
+import java.text.SimpleDateFormat;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -119,11 +119,28 @@ public class PlayController {
 
 
 //	FOR TOTAL_UNIQUE_ACTIVE_USER
-	@RequestMapping(value = "/totalUniqueActiveUser/{date}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<?> forTotalUniqueActiveUser(@PathVariable("date") Date date) {
+	@RequestMapping(value = "/totalUniqueActiveUser/{year}/{month}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<?> forTotalUniqueActiveUser(@PathVariable("year") int year, @PathVariable("month") int month) {
 		HttpStatus status = HttpStatus.OK;
-		List uniqueActiveUserList = userActivityRepository.getTotalUniqueActiveUser(date);
-		return new ResponseEntity(uniqueActiveUserList, null, status);
+		String startDateString = "" + year + "-" + month + "-01";
+		if(month == 12){
+			year += 1;
+			month = 1;
+		}
+		else {
+			month = month + 1;
+		}
+		String endDateString = "" + year + "-" + month + "-01";
+
+		SimpleDateFormat format = new SimpleDateFormat("yyyy-mm-dd");
+		Date startDate=Date.valueOf(startDateString);
+		Date endDate=Date.valueOf(endDateString);
+
+		System.out.println(startDate);
+		System.out.println(endDate);
+		List uniqueActiveUserList = userActivityRepository.getTotalUniqueActiveUser(startDate, endDate);
+		int listSize = uniqueActiveUserList.size();
+		return new ResponseEntity(listSize, null, status);
 	}
 
 }

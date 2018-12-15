@@ -2,7 +2,6 @@ package com.sjsu.cmpe275.netflix.controller;
 
 import com.sjsu.cmpe275.netflix.model.BadRequest;
 import com.sjsu.cmpe275.netflix.model.UserDetailsModel;
-import com.sjsu.cmpe275.netflix.repository.MovieReviewsRepository;
 import com.sjsu.cmpe275.netflix.repository.UserDetailsRepository;
 import javassist.tools.web.BadHttpRequest;
 import org.slf4j.Logger;
@@ -13,7 +12,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.support.*;
 import org.springframework.web.bind.support.SessionStatus;
-import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.bind.support.SessionAttributeStore;
 
@@ -22,6 +20,7 @@ import java.io.UnsupportedEncodingException;
 import java.sql.Date;
 import java.time.LocalDate;
 import java.util.Base64;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Random;
@@ -30,7 +29,6 @@ import java.util.Random;
 @CrossOrigin(origins = "*", allowCredentials = "true")
 @RequestMapping(value = "/user")
 public class LoginRegisterController {
-
 
     @Autowired
     UserDetailsRepository userDetailsRepository;
@@ -41,7 +39,6 @@ public class LoginRegisterController {
 
     private SessionAttributeStore sessionAttributeStore = new DefaultSessionAttributeStore();
 
-
     @PostMapping(value = "/register", produces = "application/json")
     private ResponseEntity<?> registerUser(@RequestBody Map map) throws UnsupportedEncodingException {
         String email = (String) map.get("email");
@@ -49,9 +46,7 @@ public class LoginRegisterController {
         String contact_no = (String) map.get("contact_no");
         String city = (String) map.get("city");
         String password = (String) map.get("password");
-        Date date = Date.valueOf((String) map.get("date"));
-        System.out.println(date);
-
+        Date date = Date.valueOf(java.time.LocalDate.now());
 
         Optional<UserDetailsModel> userOptional = userDetailsRepository.findByEmail(email);
         if (!userOptional.isPresent()) {
@@ -62,7 +57,7 @@ public class LoginRegisterController {
             String url = "http://localhost:8080/user/activate/" + email + "/" + activationCode;
             String text = "Your verification code is " + activationCode + "\n Or Click on the below link to activate your account. \n" + url;
             emailService.sendInvitationForUser(email, "Verification email for Movie Central", text);
-
+            
             return new ResponseEntity<>(user, HttpStatus.OK);
         } else {
             return new ResponseEntity<>(new BadHttpRequest(), HttpStatus.BAD_REQUEST);
@@ -72,8 +67,7 @@ public class LoginRegisterController {
 
     @GetMapping(value = "/activate/{email}/{code}", produces = "application/json")
     private ResponseEntity<?> activateUser(@PathVariable("email") String email,@PathVariable("code")  String activationCode, HttpSession session) throws UnsupportedEncodingException {
-        //String decodedEmail = new String(Base64.getDecoder().decode(email.getBytes(StandardCharsets.UTF_8)));
-        //System.out.println(decodedEmail);
+
         Optional<UserDetailsModel> userOptional = userDetailsRepository.findByEmail(email);
         if (userOptional.isPresent()) {
             UserDetailsModel user = userOptional.get();
@@ -82,7 +76,9 @@ public class LoginRegisterController {
                 user.setActivated(true);
                 userDetailsRepository.save(user);
                 session.setAttribute("userEmail", user.getEmail());
-                return new ResponseEntity<>(user, HttpStatus.OK);
+                Map<String, String> message = new HashMap<>();
+                message.put("message", "Congratulations! Your account has been verified.");
+                return new ResponseEntity<>(message, HttpStatus.OK);
             } else {
                 return new ResponseEntity<>(new BadHttpRequest(), HttpStatus.BAD_REQUEST);
             }
@@ -99,6 +95,7 @@ public class LoginRegisterController {
         if (userOptional.isPresent()) {
             UserDetailsModel user = userOptional.get();
             logger.info("String password {} ----- {}", new String(Base64.getDecoder().decode(user.getPassword().getBytes())), password);
+            System.out.println();
             if (password.equalsIgnoreCase(new String(Base64.getDecoder().decode(user.getPassword().getBytes())))) {
                 if (user.isActivated()) {
                     session.setAttribute("userEmail", user.getEmail());
@@ -135,25 +132,14 @@ public class LoginRegisterController {
         String password = "1234";
         Date date = Date.valueOf(LocalDate.now());
         System.out.println(date);
+        
+        String encodedPassword = Base64.getEncoder().encodeToString(password.getBytes());
+        String activationCode = String.valueOf(new Random(System.nanoTime()).nextInt(100000));
+        UserDetailsModel user = new UserDetailsModel(email, name, contact_no, city, date, encodedPassword, Boolean.TRUE, activationCode);
+        userDetailsRepository.save(user);
+        session.setAttribute("userEmail", user.getEmail());
 
-
-//        Optional<UserDetailsModel> userOptional = userDetailsRepository.findByEmail(email);
-//        if (!userOptional.isPresent()) {
-            String encodedPassword = Base64.getEncoder().encodeToString(password.getBytes());
-            String activationCode = String.valueOf(new Random(System.nanoTime()).nextInt(100000));
-            UserDetailsModel user = new UserDetailsModel(email, name, contact_no, city, date, encodedPassword, Boolean.TRUE, activationCode);
-            userDetailsRepository.save(user);
-            session.setAttribute("userEmail", user.getEmail());
-
-//            String url = "http://localhost:8080/user/activate/" + email + "/" + activationCode;
-//            String text = "Your verification code is " + activationCode + "\n Or Click on the below link to activate your account. \n" + url;
-//            emailService.sendInvitationForUser(email, "Verification email for Movie Central", text);
-
-            return new ResponseEntity<>(user, HttpStatus.OK);
-//        } else {
-//            return new ResponseEntity<>(new BadHttpRequest(), HttpStatus.BAD_REQUEST);
-//        }
-
+        return new ResponseEntity<>(user, HttpStatus.OK);
 
     }
 }

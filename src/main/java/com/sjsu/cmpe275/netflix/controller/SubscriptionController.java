@@ -8,7 +8,6 @@ import java.util.*;
 
 import javax.servlet.http.HttpSession;
 
-import com.sjsu.cmpe275.netflix.model.MoviesModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;

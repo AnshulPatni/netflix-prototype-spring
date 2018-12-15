@@ -25,6 +25,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.sjsu.cmpe275.netflix.repository.MoviesRepository;
 import com.sjsu.cmpe275.netflix.repository.SubscriptionRepository;
 import com.sjsu.cmpe275.netflix.repository.PayPerViewRepository;
+import com.sjsu.cmpe275.netflix.repository.RecommendationRepository;
 import com.sjsu.cmpe275.netflix.model.MoviesModel;
 
 @RestController
@@ -39,13 +40,16 @@ public class MoviesController {
 	MoviesRepository repository;
 	
 	@Autowired
+	RecommendationRepository recommendationRepository;
+	
+	@Autowired
 	SubscriptionRepository subscriptionRepository;
 	
 	@Autowired
 	PayPerViewRepository payPerViewRepository;
 
 	@RequestMapping(value = "/search/{keyword}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<?> searchMoviesByKeyword(@PathVariable("keyword") String keyword) {
+	public ResponseEntity<?> searchMoviesByKeyword(@PathVariable("keyword") String keyword, HttpSession session) {
 		HttpStatus status = HttpStatus.OK;
 
 		List<Map<String, String>> responseList = new ArrayList<>();
@@ -69,8 +73,66 @@ public class MoviesController {
 			responseList.add(eachMovieMap);
 			
 		}
+	
+		MoviesModel lt = allMovies.get(0);
+		System.out.println(lt.getActors());
+		System.out.println(session.getAttribute("userEmail").toString());
+		String name = recommendationRepository.getAlreadyuser(session.getAttribute("userEmail").toString());
+		if(name == null) {
+			recommendationRepository.recommendationMoviesByKeyword(session.getAttribute("userEmail").toString(), keyword ,lt.getActors(),lt.getGenre(),lt.getDirector());
+		}
+		else {
+			recommendationRepository.recommendationMoviesByKeywordUpdate(session.getAttribute("userEmail").toString(), keyword ,lt.getActors(),lt.getGenre(),lt.getDirector());
+
+		}
 
 		return new ResponseEntity(responseList, null, status);
+    }
+	
+	
+	@RequestMapping(value = "/recommendation", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<?> recommendation(HttpSession session) {
+		HttpStatus status = HttpStatus.OK;
+		
+		String email = (String) session.getAttribute("userEmail");
+		
+		Map<String, String> responseMap = new HashMap<>();
+		List lst = new ArrayList();
+		try {
+			
+			List<Object[]> allMoviesRecommended = recommendationRepository.getDatarecommendedMovies(email);
+			System.out.println(allMoviesRecommended.size());
+			if(allMoviesRecommended.size() != 0) {
+				for(Object[] i: allMoviesRecommended)
+				{
+					lst.add((String) i[0]);
+					lst.add((String) i[1]);
+					lst.add((String) i[2]);
+					lst.add((String) i[3]);
+				}
+	            System.out.println(lst);
+				
+	            List<String> recommendMovies = repository.recommendMovies(lst.get(0).toString(),lst.get(1).toString(),lst.get(2).toString());
+				
+				List<HashMap<String,String>> new_lst = new ArrayList<HashMap<String,String>>();
+				HashMap<String, String> map = new HashMap<String, String>();
+				map.put("keyword", lst.get(3).toString());
+				HashMap<String, HashMap<String, String>> movieMap = new HashMap<>();
+				
+				for (String i: recommendMovies) {
+					HashMap<String, String> tempMap = new HashMap<>();
+					tempMap.put("keyword", lst.get(3).toString());
+					tempMap.put("Movie", i.toString());
+					new_lst.add(tempMap);
+				}
+				return new ResponseEntity(new_lst, null, status);
+			} else {
+				status = HttpStatus.NOT_FOUND;
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return new ResponseEntity(responseMap, null, status);
     }
 	
 	
@@ -194,19 +256,6 @@ public class MoviesController {
 	
 	{e.printStackTrace();}
 	return responseEntity;
-		
-		/*
-		ResponseEntity responseEntity = new ResponseEntity("server error", HttpStatus.NOT_FOUND);
-		HttpHeaders httpHeaders = new HttpHeaders();
-		try
-		{
-			
-			repository.addMovieAdmin(title, genre, year, studio, synopsis, image_url, actors, director, country, rating, availability, price, movie_url); 
-	        return new ResponseEntity<>("server_success", null, HttpStatus.OK);      
-	        }
-		
-		catch(Exception e) {e.printStackTrace();}
-		return responseEntity;*/
 
 	}
 
@@ -247,19 +296,6 @@ public class MoviesController {
 	
 	{e.printStackTrace();}
 	return responseEntity;
-		
-		/*
-		ResponseEntity responseEntity = new ResponseEntity("server error", HttpStatus.NOT_FOUND);
-		HttpHeaders httpHeaders = new HttpHeaders();
-		try
-		{
-			
-			repository.addMovieAdmin(title, genre, year, studio, synopsis, image_url, actors, director, country, rating, availability, price, movie_url); 
-	        return new ResponseEntity<>("server_success", null, HttpStatus.OK);      
-	        }
-		
-		catch(Exception e) {e.printStackTrace();}
-		return responseEntity;*/
 
 	}
 	
@@ -284,19 +320,6 @@ public class MoviesController {
 	
 	{e.printStackTrace();}
 	return responseEntity;
-		
-		/*
-		ResponseEntity responseEntity = new ResponseEntity("server error", HttpStatus.NOT_FOUND);
-		HttpHeaders httpHeaders = new HttpHeaders();
-		try
-		{
-			
-			repository.addMovieAdmin(title, genre, year, studio, synopsis, image_url, actors, director, country, rating, availability, price, movie_url); 
-	        return new ResponseEntity<>("server_success", null, HttpStatus.OK);      
-	        }
-		
-		catch(Exception e) {e.printStackTrace();}
-		return responseEntity;*/
 
 	}
 	

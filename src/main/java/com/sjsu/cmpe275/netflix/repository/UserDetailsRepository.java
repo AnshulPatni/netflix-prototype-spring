@@ -1,7 +1,6 @@
 package com.sjsu.cmpe275.netflix.repository;
 
 import java.sql.Date;
-import java.util.List;
 import java.util.Optional;
 
 import javax.transaction.Transactional;
@@ -27,11 +26,9 @@ public interface UserDetailsRepository extends CrudRepository<UserDetailsModel, 
 	//For TotalUniqueActiveUser
 	@Query("SELECT COUNT(DISTINCT u.email) FROM UserActivityModel u WHERE u.date >= :startDate AND u.date < :endDate")
 	int getTotalActiveUniqueUser(@Param("startDate") Date startDate ,@Param("endDate") Date endDate);
-
-//	//For Login
-//	@Query("SELECT DISTINCT u.email FROM UserActivityModel u WHERE u.date >= :startDate AND u.date < :endDate")
-//	Optional<UserDetailsModel> findByEmail(String email);
-////	Optional<UserDetailsModel> findByEmailAndPassword(String email, String password);
+	
+	@Query("SELECT u.password FROM UserDetailsModel u WHERE u.email = email")
+	String getEncodedPassword(@Param("email") String email);
 
 	Optional<UserDetailsModel> findByEmail(String email);
 	Optional<UserDetailsModel> findByEmailAndPassword(String email, String password);

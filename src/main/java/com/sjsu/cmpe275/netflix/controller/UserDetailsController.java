@@ -103,30 +103,5 @@ public class UserDetailsController {
 		int uniqueActiveUserList = userDetailsRepository.getTotalUniqueUser(startDate, endDate);
 		return new ResponseEntity(uniqueActiveUserList, null, status);
 	}
-
-//	//REGISTER
-//	@PostMapping(value = "/register", produces = "application/json")
-//	private ResponseEntity<?> registerUser(@RequestParam(value = "username") String username,
-//										   @RequestParam(value = "password") String password,
-//										   @RequestParam(value = "email") String email,
-//										   @RequestParam(value = "age") String age) {
-//		Optional<UserDetailsModel> userOptional = userDetailsRepository.findByEmail(email);
-//		if (!userOptional.isPresent()) {
-//			// String userId = UUID.nameUUIDFromBytes(email.getBytes()).toString();
-//			String encodedPassword = Base64.getEncoder().encodeToString(password.getBytes());
-//			String activationCode = String.valueOf(new Random(System.nanoTime()).nextInt(100000));
-//			UserDetailsModel user = new User(username, encodedPassword, email, age, false, activationCode);
-//			String encodedEmail = Base64.getEncoder().encodeToString(email.getBytes());
-//
-//			// sending verification email
-//			userDetailsRepository.save(user);
-//			String text = "Your verification code is " + activationCode + "\n";
-//			emailService.sendInvitationForUser(email, "Verification email for surveyApe", text);
-//
-//			return new ResponseEntity<>(user, HttpStatus.OK);
-//		} else {
-//			return new ResponseEntity<>(new BadRequest(400, "Email already registered"), HttpStatus.BAD_REQUEST);
-//		}
-//	}
 	
 }
